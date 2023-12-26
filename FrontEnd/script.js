@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
   const galleryContainer = document.querySelector('.gallery');
-  const filterButtons = document.querySelectorAll('.filter-button');
 
   let allData = [];
   let categoryData = [];
@@ -14,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const imgElement = document.createElement('img');
           imgElement.src = item.imageUrl;
           imgElement.alt = item.title;
-          imgElement.dataset.category = item.id;
+          imgElement.dataset.category = item.categoryId;
 
           galleryContainer.appendChild(imgElement);
         });
@@ -31,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(data => {
       if (data && Array.isArray(data)) {
         categoryData = data;
+        createFilterButtons(categoryData);
       } else {
         console.error('La réponse de la deuxième API ne contient pas de catégories.');
       }
@@ -39,29 +39,52 @@ document.addEventListener('DOMContentLoaded', function () {
       console.error('Erreur lors de la récupération des données de la deuxième API :', error);
     });
 
-  filterButtons.forEach(button => {
-    button.addEventListener('click', function () {
-      const categoryFilter = this.dataset.category;
-
-      galleryContainer.innerHTML = '';
-
-      const filteredData = categoryFilter === 'all'
-        ? allData
-        : allData.filter(item => item.id === categoryFilter);
-
-      filteredData.forEach(item => {
-        const imgElement = document.createElement('img');
-        imgElement.src = item.imageUrl;
-        imgElement.alt = item.title;
-        imgElement.dataset.category = item.id;
-
-        const categoryInfo = categoryData.find(category => category.id === item.id);
-        if (categoryInfo) {
-          imgElement.dataset.categoryName = categoryInfo.name;
-        }
-
-        galleryContainer.appendChild(imgElement);
+    function createFilterButtons(categories) {
+      const filterButtonsContainer = document.querySelector('.filter-buttons');
+  
+      const allButton = document.createElement('button');
+      allButton.textContent = 'Tous';
+      allButton.dataset.category = 'all';
+      allButton.classList.add('filter-button', 'active');
+      allButton.addEventListener('click', function () {
+        galleryContainer.innerHTML = '';
+        allData.forEach(item => appendImageElement(item));
+        updateActiveButton(allButton);
       });
-    });
+      filterButtonsContainer.appendChild(allButton);
+  
+      categories.forEach(category => {
+        const button = document.createElement('button');
+        button.textContent = category.name;
+        button.dataset.category = category.id;
+        button.classList.add('filter-button');
+        button.addEventListener('click', function () {
+          const categoryFilter = this.dataset.category;
+          galleryContainer.innerHTML = '';
+  
+          const filteredData = categoryFilter === 'all'
+          ? allData
+          : allData.filter(item => item.categoryId == categoryFilter);
+  
+          filteredData.forEach(item => appendImageElement(item));
+          updateActiveButton(button);
+        });
+  
+        filterButtonsContainer.appendChild(button);
+      });
+    }
+  
+    function appendImageElement(item) {
+      const imgElement = document.createElement('img');
+      imgElement.src = item.imageUrl;
+      imgElement.alt = item.title;
+      imgElement.dataset.category = item.id;
+      galleryContainer.appendChild(imgElement);
+    }
+  
+    function updateActiveButton(clickedButton) {
+      const allButtons = document.querySelectorAll('.filter-button');
+      allButtons.forEach(button => button.classList.remove('active'));
+      clickedButton.classList.add('active');
+    }
   });
-});
