@@ -1,90 +1,50 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const galleryContainer = document.querySelector('.gallery');
 
+import { fetchWorksData, fetchCategoriesData } from './API.js';
+import { createFilterButtons } from './filter.js';
+import { appendImageElement, updateActiveButton } from './gallery.js';
+
+document.addEventListener('DOMContentLoaded', async function () {
+  const galleryContainer = document.querySelector('.gallery');
   let allData = [];
   let categoryData = [];
 
-  fetch('http://localhost:5678/api/works')
-    .then(response => response.json())
-    .then(data => {
-      if (data && Array.isArray(data)) {
-        allData = data;
-        data.forEach(item => {
-          const imgElement = document.createElement('img');
-          imgElement.src = item.imageUrl;
-          imgElement.alt = item.title;
-          imgElement.dataset.category = item.categoryId;
+  try {
+    const worksData = await fetchWorksData();
+    handleWorksData(worksData);
 
-          galleryContainer.appendChild(imgElement);
-        });
-      } else {
-        console.error('La réponse de l\'API ne contient pas d\'éléments.');
-      }
-    })
-    .catch(error => {
-      console.error('Erreur lors de la récupération des données de l\'API :', error);
-    });
+    const categoriesData = await fetchCategoriesData();
+    handleCategoriesData(categoriesData);
+  } catch (error) {
+    handleError('Erreur lors de la récupération des données:', error);
+  }
 
-  fetch('http://localhost:5678/api/categories')
-    .then(response => response.json())
-    .then(data => {
-      if (data && Array.isArray(data)) {
-        categoryData = data;
-        createFilterButtons(categoryData);
-      } else {
-        console.error('La réponse de la deuxième API ne contient pas de catégories.');
-      }
-    })
-    .catch(error => {
-      console.error('Erreur lors de la récupération des données de la deuxième API :', error);
-    });
-
-    function createFilterButtons(categories) {
-      const filterButtonsContainer = document.querySelector('.filter-buttons');
-  
-      const allButton = document.createElement('button');
-      allButton.textContent = 'Tous';
-      allButton.dataset.category = 'all';
-      allButton.classList.add('filter-button', 'active');
-      allButton.addEventListener('click', function () {
-        galleryContainer.innerHTML = '';
-        allData.forEach(item => appendImageElement(item));
-        updateActiveButton(allButton);
+  function handleWorksData(data) {
+    if (data && Array.isArray(data)) {
+      allData = data;
+      data.forEach(item => {
+        appendImageElement(galleryContainer, item);
       });
-      filterButtonsContainer.appendChild(allButton);
-  
-      categories.forEach(category => {
-        const button = document.createElement('button');
-        button.textContent = category.name;
-        button.dataset.category = category.id;
-        button.classList.add('filter-button');
-        button.addEventListener('click', function () {
-          const categoryFilter = this.dataset.category;
-          galleryContainer.innerHTML = '';
-  
-          const filteredData = categoryFilter === 'all'
-          ? allData
-          : allData.filter(item => item.categoryId == categoryFilter);
-  
-          filteredData.forEach(item => appendImageElement(item));
-          updateActiveButton(button);
-        });
-  
-        filterButtonsContainer.appendChild(button);
-      });
+    } else {
+      console.error('La réponse de l\'API ne contient pas d\'éléments.');
     }
-  
-    function appendImageElement(item) {
-      const imgElement = document.createElement('img');
-      imgElement.src = item.imageUrl;
-      imgElement.alt = item.title;
-      imgElement.dataset.category = item.id;
-      galleryContainer.appendChild(imgElement);
+  }
+
+  function handleCategoriesData(data) {
+    if (data && Array.isArray(data)) {
+      categoryData = data;
+      createFilterButtons(galleryContainer, categoryData, allData, appendImageElement, updateActiveButton);
+    } else {
+      console.error('La réponse de la deuxième API ne contient pas de catégories.');
     }
-  
-    function updateActiveButton(clickedButton) {
-      const allButtons = document.querySelectorAll('.filter-button');
-      allButtons.forEach(button => button.classList.remove('active'));
-      clickedButton.classList.add('active');
-    }
-  });
+  }
+
+  function updateActiveButton(clickedButton) {
+    const allButtons = document.querySelectorAll('.filter-button');
+    allButtons.forEach(button => button.classList.remove('active'));
+    clickedButton.classList.add('active');
+  }
+
+  function handleError(message, error) {
+    console.error(message, error);
+  }
+});
