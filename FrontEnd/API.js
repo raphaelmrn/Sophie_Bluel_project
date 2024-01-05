@@ -1,36 +1,26 @@
 
-export async function fetchWorksData() {
-  const worksEndpoint = 'http://localhost:5678/api/works';
+const apiUrl = 'http://localhost:5678/api/';
 
+export async function fetchData(endpoint) {
   try {
-    const worksResponse = await fetch(worksEndpoint);
+    const response = await fetch(apiUrl + endpoint);
 
-    if (!worksResponse.ok) {
-      throw new Error(`Erreur HTTP lors de la récupération des œuvres! Statut: ${worksResponse.status}`);
+    if (!response.ok) {
+      throw new Error(`Erreur HTTP lors de la récupération des données! Statut: ${response.status}`);
     }
 
-    const worksData = await worksResponse.json();
-    return worksData;
+    const data = await response.json();
+    return data;
   } catch (error) {
-    console.error('Erreur lors de la requête API pour les œuvres:', error.message);
+    console.error(`Erreur lors de la requête API pour ${endpoint}:`, error.message);
     throw error;
   }
 }
 
+export async function fetchWorksData() {
+  return fetchData('works');
+}
+
 export async function fetchCategoriesData() {
-  const categoriesEndpoint = 'http://localhost:5678/api/categories';
-
-  try {
-    const categoriesResponse = await fetch(categoriesEndpoint);
-
-    if (!categoriesResponse.ok) {
-      throw new Error(`Erreur HTTP lors de la récupération des catégories! Statut: ${categoriesResponse.status}`);
-    }
-
-    const categoriesData = await categoriesResponse.json();
-    return categoriesData;
-  } catch (error) {
-    console.error('Erreur lors de la requête API pour les catégories:', error.message);
-    throw error;
-  }
+  return fetchData('categories');
 }

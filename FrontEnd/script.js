@@ -1,26 +1,27 @@
 
 import { fetchWorksData, fetchCategoriesData } from './API.js';
-import { createFilterButtons } from './filter.js';
-import { appendImageElement, updateActiveButton } from './gallery.js';
+import { appendImageElement} from './gallery.js';
+import { handleError } from './utils.js';
+import { displayElementsByCategory } from './filter.js';
 
-document.addEventListener('DOMContentLoaded', async function () {
-  const galleryContainer = document.querySelector('.gallery');
-  let allData = [];
+  let worksData = [];
   let categoryData = [];
+  const galleryContainer = document.querySelector('.gallery');
 
   try {
-    const worksData = await fetchWorksData();
-    handleWorksData(worksData);
+    let worksData = await fetchWorksData();
+    let categoriesData = await fetchCategoriesData();
 
-    const categoriesData = await fetchCategoriesData();
+    handleWorksData(worksData);
     handleCategoriesData(categoriesData);
+
   } catch (error) {
     handleError('Erreur lors de la récupération des données:', error);
   }
 
   function handleWorksData(data) {
     if (data && Array.isArray(data)) {
-      allData = data;
+      worksData = data;
       data.forEach(item => {
         appendImageElement(galleryContainer, item);
       });
@@ -32,19 +33,8 @@ document.addEventListener('DOMContentLoaded', async function () {
   function handleCategoriesData(data) {
     if (data && Array.isArray(data)) {
       categoryData = data;
-      createFilterButtons(galleryContainer, categoryData, allData, appendImageElement, updateActiveButton);
+      displayElementsByCategory(categoryData);
     } else {
       console.error('La réponse de la deuxième API ne contient pas de catégories.');
     }
-  }
-
-  function updateActiveButton(clickedButton) {
-    const allButtons = document.querySelectorAll('.filter-button');
-    allButtons.forEach(button => button.classList.remove('active'));
-    clickedButton.classList.add('active');
-  }
-
-  function handleError(message, error) {
-    console.error(message, error);
-  }
-});
+  };
