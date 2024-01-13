@@ -7,8 +7,7 @@ export function appendImageElement(galleryContainer, item) {
   galleryContainer.appendChild(imgElement);
 }
 
-export function updateActiveButton(clickedButton) {
+export function clearActiveButtons() {
   const allButtons = document.querySelectorAll('.filter-button');
   allButtons.forEach(button => button.classList.remove('active'));
-  clickedButton.classList.add('active');
 }
