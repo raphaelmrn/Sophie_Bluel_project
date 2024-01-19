@@ -182,6 +182,10 @@ li:hover {
   color: white;
 }
 
+.forget-password{
+	text-decoration: underline;
+}
+
 
 #contact {
 	width: 50%;
@@ -213,6 +217,60 @@ margin: auto;
 #contact textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+#log-in {
+	width: 50%;
+margin: auto;
+}
+#log-in > * {
+	text-align: center;
+
+}
+#log-in h2{
+	margin-bottom: 20px;
+}
+#log-in form {
+	text-align: left;
+	margin-top:30px;
+	display: flex;
+	flex-direction: column;
+}
+
+#log-in input {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+#log-in label {
+	margin: 2em 0 1em 0;
+}
+#log-in textarea {
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+#error-message {
+	border-radius: 50%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #1D6154;
+	color: white;
+	text-align: center;
+}
+
+#close-btn {
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.error {
+  margin: 0;
+}
+
+.hidden {
+  display: none;
 }
 
 input[type="submit"]{

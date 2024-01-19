@@ -1,7 +1,6 @@
 
 import { fetchWorksData, fetchCategoriesData } from './API.js';
 import { appendImageElement} from './gallery.js';
-import { handleError } from './utils.js';
 import { displayElementsByCategory } from './filter.js';
 
   const galleryContainer = document.querySelector('.gallery');

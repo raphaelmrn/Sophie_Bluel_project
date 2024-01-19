@@ -26,14 +26,18 @@
     <section id="login">
       <h2>Log In</h2>
     </section>
-    <section id="contact">
-      <form action="#" method="post">
-      <label for="email">Email</label>
-      <input type="email" name="email" id="email">
-      <label for="password">Mot de passe</label>
-      <input type="password" name="password" id="password">
-      <input type="submit" value="Se connecter">
+    <div id="error-message" class="hidden">
+      <p class="error">Erreur dans l’identifiant ou le mot de passe <span id="close-btn">X</span></p>
+    </div>
+    <section id="log-in">
+      <form class="login" action="index.html" method="post">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email">
+        <label for="password">Mot de passe</label>
+        <input type="password" name="password" id="password">
+        <input type="submit" value="Se connecter">
       </form>
+      <a href><p class="forget-password">Mot de passe oublié</p></a>
     </section>
   </main>
 
@@ -44,5 +48,6 @@
       </ul>
     </nav>
   </footer>
+<script type="module" src="login.js"></script>
 </body>
 </html>
