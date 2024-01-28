@@ -30,3 +30,19 @@ import { displayElementsByCategory } from './filter.js';
       console.error('La réponse de la deuxième API ne contient pas de catégories.');
     }
   };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const loginLink = document.querySelector('#login-link');
+    const logoutLink = document.querySelector('#logout-link');
+  
+    const isLoggedIn = localStorage.getItem('token') !== null;
+  
+    if (isLoggedIn) {
+  
+      loginLink.style.display = 'none'; 
+      logoutLink.style.display = 'block'; 
+    } else {
+      loginLink.style.display = 'block';
+      logoutLink.style.display = 'none';
+    }
+  });
