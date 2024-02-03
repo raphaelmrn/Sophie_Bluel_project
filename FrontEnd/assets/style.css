@@ -64,7 +64,9 @@ body {
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px 0;
+	padding-top: 30px;
+
 }
 section {
 	margin: 50px 0
@@ -147,7 +149,52 @@ li:hover {
 
 .gallery img {
 	width: 100%;
+}
 
+.edit-place{
+  display: flex;
+	align-items: baseline;
+	justify-content: center;
+	gap: 10px;
+}
+
+.edit-button{
+	display: flex;
+	align-items: center;
+}
+
+.modal{
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	top: 0;
+	width: 100%;
+	height: 100%; 
+	overflow: auto;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .filter-position{
@@ -186,6 +233,27 @@ li:hover {
 	text-decoration: underline;
 }
 
+
+.editor{
+	display: flex;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 50px;
+	gap: 40px;
+	background-color: #000000;
+	color: white;
+	justify-content: center;
+	align-items: center;
+	font-family:'work Sans';
+	text-decoration: underline;
+	gap: 10px
+}
+
+.editor-text{
+	color: white;
+}
 
 #contact {
 	width: 50%;

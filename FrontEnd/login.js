@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
   const loginResponse = document.querySelector('.login');
-
+  const closeButton = document.getElementById('close-btn');
   loginResponse.addEventListener('submit', function (event) {
-    event.preventDefault()
+    event.preventDefault();
 
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+    
 
     const loginData = {
       email: email,
@@ -22,35 +23,27 @@ document.addEventListener('DOMContentLoaded', function () {
       body: JSON.stringify(loginData)
     })
       .then(response => {
-        console.warn("response")
-        return response.json()
+        console.warn("response");
+        return response.json();
       })
       .then(data => {
-            console.log(data);
-            
-            if (data.token){
-            localStorage.setItem('token', data.token);
+        console.log(data);
 
-            window.location.href = 'index.html';
-            
-            } else {
-              console.error('Absence token');
-            }
-          })
+        if (data.token) {
+          localStorage.setItem('token', data.token);
+          window.location.href = 'index.html';
+        } else {
+          document.getElementById('error-message').style.display = "block"
+          console.error('Absence token');
+        }
+      })
       .catch(error => {
         console.error('Erreur lors de la requête POST:', error);
       });
   });
+
+  closeButton.addEventListener('click', function(){
+    document.getElementById('error-message').style.display = "none"
+  })
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-  const userStatus = document.getElementById('user-status');
-
-  const isLoggedIn = localStorage.getItem('token') !== null;
-
-  if (isLoggedIn) {
-
-    const username = localStorage.getItem('username');
-    userStatus.innerHTML = `Connecté en tant que ${username}`;
-  }
-});

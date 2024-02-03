@@ -9,7 +9,7 @@ import { displayElementsByCategory } from './filter.js';
     const categoryData = await fetchCategoriesData();
 
     handleWorksData(worksData);
-    handleCategoriesData(categoriesData);
+    handleCategoriesData(categoryData);
 
   export {categoryData, worksData}
 
@@ -31,18 +31,44 @@ import { displayElementsByCategory } from './filter.js';
     }
   };
 
-  document.addEventListener('DOMContentLoaded', function () {
-    const loginLink = document.querySelector('#login-link');
-    const logoutLink = document.querySelector('#logout-link');
+  function performLogout() {
+    console.log('Logging out...');
+    localStorage.clear();
+    console.log('Token and removed');
+    window.location.href = 'index.html'
+  }
   
-    const isLoggedIn = localStorage.getItem('token') !== null;
-  
-    if (isLoggedIn) {
-  
-      loginLink.style.display = 'none'; 
-      logoutLink.style.display = 'block'; 
-    } else {
-      loginLink.style.display = 'block';
-      logoutLink.style.display = 'none';
-    }
-  });
+
+  const logoutElement = document.getElementById('logout-link');
+  const EditElement = document.getElementById('edit')
+  const loginElement = document.getElementById('login-link');
+  const isLogged = localStorage.getItem('token') !== null;
+  if (isLogged) {
+    console.log('Logged');
+    logoutElement.style.display = "block"
+    loginElement.style.display = "none"
+    EditElement.style.display = "block"
+    logoutElement.addEventListener("click", function(){
+      performLogout()
+    })
+  }else{
+    console.log('Not logged');
+    logoutElement.style.display = "none"
+    loginElement.style.display = "block"
+    EditElement.style.display = "none"
+  }
+
+var modal = document.getElementById("modall");
+var btn = document.getElementById("edit-button");
+var span = document.getElementsByClassName("close")[0];
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+span.onclick = function() {
+  modal.style.display = "none";
+}
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
