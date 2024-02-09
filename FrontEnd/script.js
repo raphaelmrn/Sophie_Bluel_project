@@ -2,8 +2,10 @@
 import { fetchWorksData, fetchCategoriesData } from './API.js';
 import { appendImageElement} from './gallery.js';
 import { displayElementsByCategory } from './filter.js';
+import { addTrashIcons } from './modal.js';
 
   const galleryContainer = document.querySelector('.gallery');
+  const modalGallery = document.querySelector('.modal-gallery')
 
     const worksData = await fetchWorksData();
     const categoryData = await fetchCategoriesData();
@@ -37,17 +39,18 @@ import { displayElementsByCategory } from './filter.js';
     console.log('Token and removed');
     window.location.href = 'index.html'
   }
-  
 
   const logoutElement = document.getElementById('logout-link');
-  const EditElement = document.getElementById('edit')
+  const unloggedElements = document.getElementsByClassName('unlogged') 
   const loginElement = document.getElementById('login-link');
   const isLogged = localStorage.getItem('token') !== null;
   if (isLogged) {
     console.log('Logged');
     logoutElement.style.display = "block"
     loginElement.style.display = "none"
-    EditElement.style.display = "block"
+    for (let i = 0; i < unloggedElements.length; i++) {
+      unloggedElements[i].style.display = "block";
+  }
     logoutElement.addEventListener("click", function(){
       performLogout()
     })
@@ -55,20 +58,42 @@ import { displayElementsByCategory } from './filter.js';
     console.log('Not logged');
     logoutElement.style.display = "none"
     loginElement.style.display = "block"
-    EditElement.style.display = "none"
+    for (let i = 0; i < unloggedElements.length; i++) {
+      unloggedElements[i].style.display = "none";
+    }
   }
 
-var modal = document.getElementById("modall");
-var btn = document.getElementById("edit-button");
-var span = document.getElementsByClassName("close")[0];
-btn.onclick = function() {
-  modal.style.display = "block";
-}
-span.onclick = function() {
-  modal.style.display = "none";
-}
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
+  var modal = document.getElementsByClassName("modal");
+  var editBtn = document.getElementsByClassName("editBtn");
+  var close = document.getElementsByClassName("close")[0];
+
+  editBtn[0].onclick = async function() {
+    modal[0].style.display = "block";
+    try {
+      const worksData = await fetchWorksData();
+      const modalGallery = document.querySelector('.modal-gallery');
+      if (Array.isArray(worksData) && modalGallery) {
+        modalGallery.innerHTML = '';
+        worksData.forEach(item => {
+          appendImageElement(modalGallery, item)
+        });
+        addTrashIcons(modalGallery);
+      } else {
+        console.error('indisponible');
+      }
+    } catch (error) {
+      console.error('Erreur lors de la récupération des données :', error);
+    }
+  };
+  
+  close.onclick = function() {
+    modal[0].style.display = "none";
+  };
+  
+  window.onclick = function(event) {
+    if (event.target == modal[0]) {
+      modal[0].style.display = "none";
+    }
+  };  
+
+//TODO requete post vérification authentification
