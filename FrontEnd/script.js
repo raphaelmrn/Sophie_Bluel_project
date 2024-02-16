@@ -2,10 +2,9 @@
 import { fetchWorksData, fetchCategoriesData } from './API.js';
 import { appendImageElement} from './gallery.js';
 import { displayElementsByCategory } from './filter.js';
-import { addTrashIcons } from './modal.js';
+import { handleDeleteIcons } from './modal.js';
 
   const galleryContainer = document.querySelector('.gallery');
-  const modalGallery = document.querySelector('.modal-gallery')
 
     const worksData = await fetchWorksData();
     const categoryData = await fetchCategoriesData();
@@ -75,9 +74,9 @@ import { addTrashIcons } from './modal.js';
       if (Array.isArray(worksData) && modalGallery) {
         modalGallery.innerHTML = '';
         worksData.forEach(item => {
-          appendImageElement(modalGallery, item)
+          appendImageElement(modalGallery, item, true);
         });
-        addTrashIcons(modalGallery);
+        handleDeleteIcons();
       } else {
         console.error('indisponible');
       }
@@ -89,7 +88,6 @@ import { addTrashIcons } from './modal.js';
   close.onclick = function() {
     modal[0].style.display = "none";
   };
-  
   window.onclick = function(event) {
     if (event.target == modal[0]) {
       modal[0].style.display = "none";

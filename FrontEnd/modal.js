@@ -1,20 +1,30 @@
-export function addTrashIcons(modalGallery) {
-  const images = modalGallery.querySelectorAll('img'); 
-  images.forEach(image => {
-    const trashIcon = document.createElement("div");
-      trashIcon.classList.add("deletePhoto");
-      trashIcon.innerHTML =
-        '<svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.6 1.8V0.9C6.6 0.402944 6.19704 0 5.7 0H3.3C2.80294 0 2.4 0.402944 2.4 0.9V1.8H0V2.4H0.6V8.1C0.6 8.59704 1.00294 9 1.5 9H7.5C7.99704 9 8.4 8.59704 8.4 8.1V2.4H9V1.8H6.6ZM3 0.9C3 0.734316 3.13432 0.6 3.3 0.6H5.7C5.86568 0.6 6 0.734316 6 0.9V1.8H3V0.9ZM4.2 4.2V7.2H4.8V4.2H4.2ZM2.4 7.2V5.4H3V7.2H2.4ZM6 5.4V7.2H6.6V5.4H6Z" fill="white"/></svg>';
-      trashIcon.addEventListener('click', () => {
+
+export function handleDeleteIcons() {
+  var deleteIcons = document.querySelectorAll('.delete-icon');
+
+  deleteIcons.forEach(function(icon) {
+    icon.addEventListener('click', function() {
+      var workId = icon.parentNode.dataset.id;
+
+      fetch(`http://localhost:5678/api/works/${workId}`, {
+        method: 'DELETE',
+        headers: {
+          'accept': '*/*',
+          Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY1MTg3NDkzOSwiZXhwIjoxNjUxOTYxMzM5fQ.JGN1p8YIfR-M-5eQ-Ypy6Ima5cKA4VbfL2xMr2MgHm4'}`
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          icon.parentNode.remove();
+          console.log('L\'élément a été supprimé avec succès.');
+        } else {
+          console.error('Erreur lors de la suppression de l\'élément :', response.status);
+        }
+      })
+      .catch(error => {
+        console.error('Erreur lors de la suppression de l\'élément :', error);
       });
-    image.parentNode.insertBefore(trashIcon, image);
+    });
   });
 }
-
-
-
-
-
-
-
 
