@@ -1,30 +1,35 @@
+import { getApiDelete } from "./API.js";
 
-export function handleDeleteIcons() {
+export async function handleDeleteIcons() {
   var deleteIcons = document.querySelectorAll('.delete-icon');
 
-  deleteIcons.forEach(function(icon) {
-    icon.addEventListener('click', function() {
+  deleteIcons.forEach(async function(icon) {
+    icon.addEventListener('click', async function() {
       var workId = icon.parentNode.dataset.id;
 
-      fetch(`http://localhost:5678/api/works/${workId}`, {
-        method: 'DELETE',
-        headers: {
-          'accept': '*/*',
-          Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY1MTg3NDkzOSwiZXhwIjoxNjUxOTYxMzM5fQ.JGN1p8YIfR-M-5eQ-Ypy6Ima5cKA4VbfL2xMr2MgHm4'}`
-        }
-      })
-      .then(response => {
+      try {
+        const apiDelete = await getApiDelete(workId);
+        const { url, headers } = apiDelete;
+
+        const response = await fetch(url, {
+          method: 'DELETE',
+          headers: {
+            'accept': '*/*',
+            ...headers
+          }
+        });
+
         if (response.ok) {
           icon.parentNode.remove();
           console.log('L\'élément a été supprimé avec succès.');
         } else {
           console.error('Erreur lors de la suppression de l\'élément :', response.status);
         }
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Erreur lors de la suppression de l\'élément :', error);
-      });
+      }
     });
   });
 }
 
+// TODO stocker le token bearer

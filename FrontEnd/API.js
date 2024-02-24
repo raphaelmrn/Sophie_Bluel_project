@@ -24,3 +24,37 @@ export async function fetchWorksData() {
 export async function fetchCategoriesData() {
   return fetchData('categories');
 }
+
+
+export async function storeApiDelete(id, requestURL, headers) {
+
+  const apiDelete = {
+    id: id,
+    requestURL: requestURL,
+    headers: headers,
+  };
+
+  const apiDeleteString = JSON.stringify(apiDelete);
+
+  sessionStorage.setItem('apiDelete', apiDeleteString);
+}
+
+export async function getApiDelete() {
+  
+  const apiDeleteString = sessionStorage.getItem('apiDelete');
+
+  if (apiDeleteString) {
+    const apiDelete = JSON.parse(apiDeleteString);
+    return apiDelete;
+  } else {
+    return null;
+  }
+}
+
+storeApiDelete(1, 'http://localhost:5678/api/works/1', {
+  accept: '*/*',
+  Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY1MTg3NDkzOSwiZXhwIjoxNjUxOTYxMzM5fQ.JGN1p8YIfR-M-5eQ-Ypy6Ima5cKA4VbfL2xMr2MgHm4',
+});
+
+const apiDelete = getApiDelete();
+console.log(apiDelete);
