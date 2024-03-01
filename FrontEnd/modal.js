@@ -1,4 +1,4 @@
-import { getApiDelete } from "./API.js";
+import { login } from "./API.js";
 
 export async function handleDeleteIcons() {
   var deleteIcons = document.querySelectorAll('.delete-icon');
@@ -8,7 +8,7 @@ export async function handleDeleteIcons() {
       var workId = icon.parentNode.dataset.id;
 
       try {
-        const apiDelete = await getApiDelete(workId);
+        const apiDelete = await login(workId);
         const { url, headers } = apiDelete;
 
         const response = await fetch(url, {

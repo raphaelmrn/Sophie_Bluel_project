@@ -198,12 +198,18 @@ li:hover {
 
 .delete-icon {
   position: absolute;
-	z-index: 3;
+	background-color: red;
+	z-index: 2;
   top: 0;
   right: 0;
   width: 24px;
   height: 24px;
   cursor: pointer;
+}
+
+.trash-icon path{
+	fill:#000;
+	z-index: 3;
 }
 
 .modal-content {
@@ -295,6 +301,7 @@ li:hover {
 
 
 .editor{
+	z-index: 1;
 	display: flex;
 	position: fixed;
 	top: 0;

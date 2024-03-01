@@ -34,7 +34,7 @@ import { handleDeleteIcons } from './modal.js';
 
   function performLogout() {
     console.log('Logging out...');
-    localStorage.clear();
+    sessionStorage.clear();
     console.log('Token and removed');
     window.location.href = 'index.html'
   }
@@ -42,7 +42,7 @@ import { handleDeleteIcons } from './modal.js';
   const logoutElement = document.getElementById('logout-link');
   const unloggedElements = document.getElementsByClassName('unlogged') 
   const loginElement = document.getElementById('login-link');
-  const isLogged = localStorage.getItem('token') !== null;
+  const isLogged = localStorage.getItem('authToken') !== null;
   if (isLogged) {
     console.log('Logged');
     logoutElement.style.display = "block"

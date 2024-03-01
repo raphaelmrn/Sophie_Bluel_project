@@ -15,13 +15,12 @@ export function appendImageElement(galleryContainer, item, isModalGallery) {
     trashIconContainer.classList.add('delete-icon');
 
     const trashIcon = document.createElement('svg');
-    trashIcon.classList.add('delete-icon');
+    trashIcon.classList.add('trash-icon');
     trashIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-    trashIcon.setAttribute('width', '24');
-    trashIcon.setAttribute('height', '24');
+    trashIcon.setAttribute('width', '32');
+    trashIcon.setAttribute('height', '32');
     trashIcon.setAttribute('viewBox', '0 0 24 24');
-    trashIcon.innerHTML = '<path fill="none" d="M0 0h24v24H0z"/><path d="M17 5h-3V4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v1H7V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v1H1v2h22V5h-3zM8 18v-1h8v1a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1z"/>';
-
+    trashIcon.innerHTML = '<path fill="currentColor" d="M7.615 20q-.67 0-1.143-.472Q6 19.056 6 18.385V6H5V5h4v-.77h6V5h4v1h-1v12.385q0 .69-.462 1.152q-.463.463-1.153.463zM17 6H7v12.385q0 .269.173.442t.442.173h8.77q.23 0 .423-.192q.192-.193.192-.423zM9.808 17h1V8h-1zm3.384 0h1V8h-1zM7 6v13z"/> '
     trashIconContainer.appendChild(trashIcon);
     imgContainer.appendChild(trashIconContainer);
   }

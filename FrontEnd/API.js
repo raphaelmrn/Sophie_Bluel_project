@@ -25,36 +25,34 @@ export async function fetchCategoriesData() {
   return fetchData('categories');
 }
 
+  // #TODO stocker token dynamiquement + changer les noms pour qu'ils soient plus logiques
 
-export async function storeApiDelete(id, requestURL, headers) {
-
-  const apiDelete = {
-    id: id,
-    requestURL: requestURL,
-    headers: headers,
-  };
-
-  const apiDeleteString = JSON.stringify(apiDelete);
-
-  sessionStorage.setItem('apiDelete', apiDeleteString);
-}
-
-export async function getApiDelete() {
-  
-  const apiDeleteString = sessionStorage.getItem('apiDelete');
-
-  if (apiDeleteString) {
-    const apiDelete = JSON.parse(apiDeleteString);
-    return apiDelete;
-  } else {
-    return null;
+  function tokenStorage(token){
+    sessionStorage.setItem("authToken", token);
   }
-}
 
-storeApiDelete(1, 'http://localhost:5678/api/works/1', {
-  accept: '*/*',
-  Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY1MTg3NDkzOSwiZXhwIjoxNjUxOTYxMzM5fQ.JGN1p8YIfR-M-5eQ-Ypy6Ima5cKA4VbfL2xMr2MgHm4',
-});
+  export async function login(credentials) {
+    try {
+        const requestURL = apiUrl + 'users/login';
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(credentials)
+        };
 
-const apiDelete = getApiDelete();
-console.log(apiDelete);
+        const response = await fetch(requestURL, options);
+          
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP lors de la connexion! Statut: ${response.status}`);
+        }
+
+        const loginData = await response.json();
+        tokenStorage(loginData.token);
+        return loginData;
+    } catch (error) {
+        console.error('Erreur lors de la connexion:', error);
+        throw error;
+    }
+  }
