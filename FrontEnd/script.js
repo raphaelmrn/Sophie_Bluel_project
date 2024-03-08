@@ -42,7 +42,7 @@ import { handleDeleteIcons } from './modal.js';
   const logoutElement = document.getElementById('logout-link');
   const unloggedElements = document.getElementsByClassName('unlogged') 
   const loginElement = document.getElementById('login-link');
-  const isLogged = localStorage.getItem('authToken') !== null;
+  const isLogged = sessionStorage.getItem('authToken') !== null;
   if (isLogged) {
     console.log('Logged');
     logoutElement.style.display = "block"
@@ -62,9 +62,9 @@ import { handleDeleteIcons } from './modal.js';
     }
   }
 
-  var modal = document.getElementsByClassName("modal");
-  var editBtn = document.getElementsByClassName("editBtn");
-  var close = document.getElementsByClassName("close")[0];
+  let modal = document.getElementsByClassName("modal");
+  let editBtn = document.getElementsByClassName("editBtn");
+  let close = document.getElementsByClassName("close")[0];
 
   editBtn[0].onclick = async function() {
     modal[0].style.display = "block";
@@ -94,4 +94,4 @@ import { handleDeleteIcons } from './modal.js';
     }
   };  
 
-//TODO requete post vérification authentification
+//TODO l42 a l45 tout mettre dans une fonction

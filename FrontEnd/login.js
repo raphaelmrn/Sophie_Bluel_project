@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(data);
 
         if (data.token) {
-          localStorage.setItem('token', data.token);
+          sessionStorage.setItem('authToken', data.token);
           window.location.href = 'index.html';
         } else {
           document.getElementById('error-message').style.display = "block"

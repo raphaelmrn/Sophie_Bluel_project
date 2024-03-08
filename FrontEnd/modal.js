@@ -1,35 +1,33 @@
-import { login } from "./API.js";
-
+import { deleteElement } from "./API.js";
 export async function handleDeleteIcons() {
-  var deleteIcons = document.querySelectorAll('.delete-icon');
+  const deleteIcons = document.querySelectorAll(".delete-icon");
 
-  deleteIcons.forEach(async function(icon) {
-    icon.addEventListener('click', async function() {
-      var workId = icon.parentNode.dataset.id;
+  deleteIcons.forEach(async function (icon) {
+    icon.addEventListener("click", async function () {
+      const workId = icon.parentNode.dataset.id;
 
       try {
-        const apiDelete = await login(workId);
-        const { url, headers } = apiDelete;
+        const authToken = sessionStorage.getItem("authToken");
+        if (!authToken) {
+          console.error(
+            "Erreur lors de la suppression de l'élément : Utilisateur non authentifié"
+          );
+          return;
+        }
+        const response = await deleteElement(workId, authToken);
 
-        const response = await fetch(url, {
-          method: 'DELETE',
-          headers: {
-            'accept': '*/*',
-            ...headers
-          }
-        });
-
-        if (response.ok) {
+        if (response.status === 204) {
           icon.parentNode.remove();
-          console.log('L\'élément a été supprimé avec succès.');
+          console.log("L'élément a été supprimé avec succès.");
         } else {
-          console.error('Erreur lors de la suppression de l\'élément :', response.status);
+          console.error(
+            "Erreur lors de la suppression de l'élément :",
+            response.status
+          );
         }
       } catch (error) {
-        console.error('Erreur lors de la suppression de l\'élément :', error);
+        console.error("Erreur lors de la suppression de l'élément :", error);
       }
     });
   });
 }
-
-// TODO stocker le token bearer

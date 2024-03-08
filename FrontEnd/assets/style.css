@@ -201,7 +201,6 @@ li:hover {
 	background-color: red;
 	z-index: 2;
   top: 0;
-  right: 0;
   width: 24px;
   height: 24px;
   cursor: pointer;
