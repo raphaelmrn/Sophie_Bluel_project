@@ -80,3 +80,5 @@ export async function deleteElement(workId, authToken) {
 
   return fetch(requestURL, options);
 }
+
+// #TODO bien vérifier que l'elemement soit supprimé en derrière la modal
