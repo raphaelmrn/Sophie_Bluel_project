@@ -6,12 +6,14 @@ export function appendImageElement(galleryContainer, item, isModalGallery) {
   imgElement.src = item.imageUrl;
   imgElement.alt = item.title;
   imgElement.dataset.category = item.categoryId;
+  imgElement.dataset.id = item.id;
 
   imgContainer.appendChild(imgElement);
 
   if (isModalGallery) {
     const trashIconContainer = document.createElement("div");
     trashIconContainer.classList.add("delete-icon");
+    trashIconContainer.dataset.id = item.id;
 
     const trashIcon = document.createElement("svg");
     trashIcon.classList.add("trash-icon");

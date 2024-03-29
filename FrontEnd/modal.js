@@ -4,7 +4,8 @@ export async function handleDeleteIcons() {
 
   deleteIcons.forEach(async function (icon) {
     icon.addEventListener("click", async function () {
-      const workId = icon.parentNode.dataset.id;
+      console.log("data-id de l'élément parent :", icon.parentNode.dataset.id);
+      const workId = icon.dataset.id;
 
       try {
         const authToken = sessionStorage.getItem("authToken");

@@ -309,6 +309,27 @@ li:hover {
 	height: 36px;
 	text-align: center;
 	border-radius: 60px ;
+	border: none;
+}
+.img-svg{
+	margin-top: 20px;
+  max-width: 76px;
+  max-height: 76px;
+}
+
+.photo-btn{
+	display: flex;
+	font-family: 'Syne';
+	font-weight: 700;
+	color: #306685;
+	background-color: #CBD6DC;
+	margin : auto ;
+	width: 237px;
+	height: 36px;
+	text-align: center;
+	justify-content: center;
+	border-radius: 60px ;
+	align-items: center;
 }
 
 .editable{
@@ -352,6 +373,39 @@ li:hover {
 	color: white;
 }
 
+.add-image{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	z-index: 0;
+	background-color: #E8F1F6;
+	border: none;
+	padding-bottom: 20px;
+}
+
+.add-image input[type="file"] {
+  z-index: 1;
+  opacity: 0;
+}
+
+.photo-btn {
+    position: relative;
+    display: inline-block;
+}
+
+.file-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+}
+
 #add-project{
 		width: 50%;
 	margin: auto;
@@ -362,6 +416,8 @@ li:hover {
 	flex-direction: column;
 	text-align: left;
 	margin-top:30px;
+	margin-bottom: 30px;
+	gap: 20px;
 }
 
 #add-project input {
@@ -371,12 +427,15 @@ li:hover {
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
+
+
 #add-project select {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
 
 #contact {
 	width: 50%;

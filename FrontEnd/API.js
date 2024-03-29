@@ -69,6 +69,7 @@ export async function login(credentials) {
 }
 
 export async function deleteElement(workId, authToken) {
+  console.warn("coucou", workId);
   const requestURL = `${apiUrl}works/${workId}`;
   const options = {
     method: "DELETE",
