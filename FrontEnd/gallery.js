@@ -12,18 +12,18 @@ export function appendImageElement(galleryContainer, item, isModalGallery) {
 
   if (isModalGallery) {
     const trashIconContainer = document.createElement("div");
-    trashIconContainer.classList.add("delete-icon");
-    trashIconContainer.dataset.id = item.id;
+    trashIconContainer.classList.add("delete-icon-container");
 
     const trashIcon = document.createElement("svg");
-    trashIcon.classList.add("trash-icon");
+    trashIcon.classList.add("delete-icon");
     trashIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-    trashIcon.setAttribute("width", "32");
-    trashIcon.setAttribute("height", "32");
-    trashIcon.setAttribute("viewBox", "0 0 24 24");
-    trashIcon.innerHTML =
-      '<path fill="currentColor" d="M7.615 20q-.67 0-1.143-.472Q6 19.056 6 18.385V6H5V5h4v-.77h6V5h4v1h-1v12.385q0 .69-.462 1.152q-.463.463-1.153.463zM17 6H7v12.385q0 .269.173.442t.442.173h8.77q.23 0 .423-.192q.192-.193.192-.423zM9.808 17h1V8h-1zm3.384 0h1V8h-1zM7 6v13z"/> ';
+    trashIcon.setAttribute("viewBox", "0 0 448 512");
+    trashIcon.innerHTML = `
+  <path fill="currentColor" d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/>
+`;
+
     trashIconContainer.appendChild(trashIcon);
+
     imgContainer.appendChild(trashIconContainer);
   }
 

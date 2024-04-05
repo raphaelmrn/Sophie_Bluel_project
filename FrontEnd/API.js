@@ -29,8 +29,6 @@ export async function fetchCategoriesData() {
   return fetchData("categories");
 }
 
-// #TODO vérifier que le token existe avant (req 401) -> done
-
 function tokenStorage(token) {
   sessionStorage.setItem("authToken", token);
 }
@@ -69,7 +67,6 @@ export async function login(credentials) {
 }
 
 export async function deleteElement(workId, authToken) {
-  console.warn("coucou", workId);
   const requestURL = `${apiUrl}works/${workId}`;
   const options = {
     method: "DELETE",
@@ -82,4 +79,47 @@ export async function deleteElement(workId, authToken) {
   return fetch(requestURL, options);
 }
 
-// #TODO bien vérifier que l'elemement soit supprimé en derrière la modal
+async function createElement(formData, authToken) {
+  const requestURL = `${apiUrl}works`;
+  const options = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+    body: formData,
+  };
+
+  try {
+    const response = await fetch(requestURL, options);
+    if (response.ok) {
+      console.log("Work created successfully.");
+    } else {
+      console.error("Failed to create work:", response.statusText);
+    }
+  } catch (error) {
+    console.error("Error creating work:", error);
+  }
+}
+
+document
+  .querySelector("form")
+  .addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const title = document.getElementById("title").value;
+    const category = document.getElementById("categories").value;
+    const fileInput = document.getElementById("file");
+    const file = fileInput.files[0];
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("category", category);
+    formData.append("image", file);
+
+    const authToken = sessionStorage.getItem("authToken");
+    if (!authToken) {
+      console.error("User not authenticated.");
+      return;
+    }
+    await createElement(formData, authToken);
+  });

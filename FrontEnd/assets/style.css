@@ -198,12 +198,12 @@ li:hover {
 
 .delete-icon {
   position: absolute;
-	background-color: red;
 	z-index: 2;
   top: 0;
   width: 24px;
   height: 24px;
   cursor: pointer;
+	fill: #000;
 }
 
 .trash-icon path{

@@ -116,14 +116,11 @@ addButton.addEventListener("click", displayModalView);
 backButton.addEventListener("click", displayModalView);
 
 async function addCategoriesSelect() {
-  console.log("La fonction addCategoriesSelect est appelée.");
   const selectElement = document.getElementById("categories");
-  console.log("Element select récupéré :", selectElement);
-  selectElement.innerHTML = "";
 
+  selectElement.innerHTML = "";
   try {
     const categories = await fetchCategoriesData();
-    console.log("Données des catégories récupérées :", categories);
 
     categories.forEach((category) => {
       const option = document.createElement("option");
@@ -135,5 +132,7 @@ async function addCategoriesSelect() {
     console.error("Erreur sur la récup des catégories", error);
   }
 }
-window.addEventListener("DOMContentLoaded", addCategoriesSelect);
+addCategoriesSelect();
+
 //TODO l42 a l45 tout mettre dans une fonction
+//TODO .files[O]
