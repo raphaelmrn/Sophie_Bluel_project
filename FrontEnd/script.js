@@ -95,30 +95,30 @@ window.onclick = function (event) {
   }
 };
 
-const addButton = document.querySelector(".add-button");
+const nextButton = document.querySelector(".next-button");
 const backButton = document.querySelector(".back");
 
 const visual = document.querySelector(".visual");
 const editable = document.querySelector(".editable");
 
 function displayModalView() {
-  if (this === addButton) {
+  if (this === nextButton) {
     editable.style.display = "block";
     visual.style.display = "none";
   } else if (this === backButton) {
     editable.style.display = "none";
     visual.style.display = "block";
   }
+  console.log(this);
 }
 
-addButton.addEventListener("click", displayModalView);
+nextButton.addEventListener("click", displayModalView);
 
 backButton.addEventListener("click", displayModalView);
 
 async function addCategoriesSelect() {
   const selectElement = document.getElementById("categories");
 
-  selectElement.innerHTML = "";
   try {
     const categories = await fetchCategoriesData();
 
@@ -134,5 +134,70 @@ async function addCategoriesSelect() {
 }
 addCategoriesSelect();
 
-//TODO l42 a l45 tout mettre dans une fonction
-//TODO .files[O]
+document.getElementById("file").addEventListener("change", function (event) {
+  const file = event.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = function (e) {
+    const imgElement = document.getElementById("image-preview");
+    imgElement.src = e.target.result;
+    imgElement.style.display = "block";
+
+    const svgIcon = document.querySelector(".img-svg");
+    if (svgIcon) {
+      svgIcon.style.display = "none";
+    }
+
+    const photoBtn = document.querySelector(".photo-btn");
+    if (photoBtn) {
+      photoBtn.style.display = "none";
+    }
+
+    const fileLabel = document.querySelector(".file-label");
+    if (fileLabel) {
+      fileLabel.style.display = "none";
+    }
+  };
+
+  reader.readAsDataURL(file);
+});
+
+const editableSection = document.querySelector(".editable");
+if (editableSection) {
+  const fileInput = document.getElementById("file");
+  document.getElementById("file").addEventListener("change", function () {
+    const fileInput = document.getElementById("file");
+    const file = fileInput.files[0];
+    const acceptedTypes = ["image/jpeg", "image/jpg", "image/png"];
+
+    if (file && !acceptedTypes.includes(file.type)) {
+      alert("Veuillez sélectionner un fichier de type JPEG, JPG ou PNG.");
+      fileInput.value = "";
+      if (imagePreview) {
+        imagePreview.parentNode.removeChild(imagePreview);
+      }
+    }
+  });
+
+  const titleInput = document.getElementById("title");
+  const categoriesSelect = document.getElementById("categories");
+  const addButton = document.querySelector(".add-button");
+  addButton.disabled = true;
+
+  function checkFields() {
+    const fileFilled = fileInput.files.length > 0;
+    const titleFilled = titleInput.value.trim() !== "";
+    const categoriesFilled =
+      categoriesSelect.value !== "Selectionnez une catégorie";
+
+    if (fileFilled && titleFilled && categoriesFilled) {
+      addButton.disabled = false;
+    } else {
+      addButton.disabled = true;
+    }
+  }
+
+  fileInput.addEventListener("change", checkFields);
+  titleInput.addEventListener("input", checkFields);
+  categoriesSelect.addEventListener("change", checkFields);
+}

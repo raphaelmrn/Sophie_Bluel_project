@@ -199,11 +199,13 @@ li:hover {
 .delete-icon {
   position: absolute;
 	z-index: 2;
+	padding: 5px;
   top: 0;
-  width: 24px;
+	right: 0;
+  width: 20px;
   height: 24px;
+	background-color: rgb(6, 6, 6);
   cursor: pointer;
-	fill: #000;
 }
 
 .trash-icon path{
@@ -299,6 +301,21 @@ li:hover {
 	display: flex;
 	align-items: center;
 }
+
+.next-button{
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin : 2em auto ;
+	width: 237px;
+	height: 36px;
+	text-align: center;
+	border-radius: 60px ;
+	border: none;
+	cursor: pointer;
+}
+
 .add-button{
 	font-family: 'Syne';
 	font-weight: 700;
@@ -310,11 +327,20 @@ li:hover {
 	text-align: center;
 	border-radius: 60px ;
 	border: none;
+	cursor: pointer;
 }
+
+.add-button:disabled {
+  background-color: #c6c2c2; 
+  color: #636161; 
+  cursor: not-allowed; 
+}
+
 .img-svg{
 	margin-top: 20px;
   max-width: 76px;
   max-height: 76px;
+	display: block;
 }
 
 .photo-btn{
@@ -330,6 +356,7 @@ li:hover {
 	justify-content: center;
 	border-radius: 60px ;
 	align-items: center;
+	display: block;
 }
 
 .editable{
@@ -380,7 +407,11 @@ li:hover {
 	z-index: 0;
 	background-color: #E8F1F6;
 	border: none;
-	padding-bottom: 20px;
+	margin-bottom: 20px;
+}
+
+#image-preview{
+	display: none;
 }
 
 .add-image input[type="file"] {
@@ -391,6 +422,7 @@ li:hover {
 .photo-btn {
     position: relative;
     display: inline-block;
+		margin-bottom: 20px;
 }
 
 .file-label {
@@ -404,6 +436,15 @@ li:hover {
     justify-content: center;
     cursor: pointer;
 
+}
+
+.image-preview{
+	display: none;
+}
+
+#image-preview {
+  max-width: 50%; 
+  max-height: 140%;
 }
 
 #add-project{

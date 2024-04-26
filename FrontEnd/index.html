@@ -92,15 +92,15 @@
 								<div class="visual">
 									<p class="modal-title">Galerie Photo</p>
 									<div class="modal-gallery">
-                    <div class="delete-icon-container">
-                        <div class="modal-image">
-                            <img src="" />
+                    <div class="modal-image">
+                      <img src="" />
+                        <div class="delete-icon">
                         </div>
                     </div>
 									</div>
 									<hr class="line" />
 									<div class="add-photo">
-										<button class="add-button">Ajouter une photo</button>
+										<button class="next-button">Ajouter une photo</button>
 									</div>
 								</div>
 								<div class="editable">
@@ -113,16 +113,18 @@
 									<section id="add-project">
 										<form action="#" method="post">
 											<div class="add-image">
+                        <img id="image-preview" src="#" alt="Aperçu de l'image">
 												<svg class="img-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#cbd6dc" d="M448 80c8.8 0 16 7.2 16 16V415.8l-5-6.5-136-176c-4.5-5.9-11.6-9.3-19-9.3s-14.4 3.4-19 9.3L202 340.7l-30.5-42.7C167 291.7 159.8 288 152 288s-15 3.7-19.5 10.1l-80 112L48 416.3l0-.3V96c0-8.8 7.2-16 16-16H448zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm80 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"/></svg>
-												<div class="photo-btn">
-														<input type="file" name="file" id="file"/>
-														<label for="file" class="file-label">+ Ajouter une photo</label>
-												</div>
+                        <div class="photo-btn">
+                          <input type="file" name="file" id="file" accept=".jpg, .jpeg, .png" maxlength="4194304"/>
+                          <label for="file" class="file-label">+ Ajouter une photo</label>
+                        </div>
 											</div>
 											<label for="title">Titre</label>
 											<input type="title" name="title" id="title"/>
 											<label for="categories">Catégories</label>
 											<select id="categories" name="categories">
+                        <option selected disabled>Selectionnez une catégorie</option>
 											</select>
 											<hr class="line" />
 											<div class="add-photo">
