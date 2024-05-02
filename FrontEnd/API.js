@@ -81,6 +81,7 @@ export async function deleteElement(workId, authToken) {
 
 async function createElement(formData, authToken) {
   const requestURL = `${apiUrl}works`;
+  let modal = document.getElementsByClassName("modal");
   const options = {
     method: "POST",
     headers: {
@@ -93,6 +94,8 @@ async function createElement(formData, authToken) {
     const response = await fetch(requestURL, options);
     if (response.ok) {
       console.log("Work created successfully.");
+      modal[0].style.display = "none";
+      location.reload();
     } else {
       console.error("Failed to create work:", response.statusText);
     }

@@ -88,10 +88,12 @@ editBtn[0].onclick = async function () {
 
 close.onclick = function () {
   modal[0].style.display = "none";
+  location.reload();
 };
 window.onclick = function (event) {
   if (event.target == modal[0]) {
     modal[0].style.display = "none";
+    location.reload();
   }
 };
 
