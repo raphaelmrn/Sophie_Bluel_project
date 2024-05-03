@@ -199,11 +199,9 @@ li:hover {
 .delete-icon {
   position: absolute;
 	z-index: 2;
-	padding: 5px;
+	padding: 1px;
   top: 0;
-	right: 0;
   width: 20px;
-  height: 24px;
 	background-color: rgb(6, 6, 6);
   cursor: pointer;
 }
