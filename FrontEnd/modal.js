@@ -6,13 +6,13 @@ export async function handleDeleteIcons() {
   deleteIcons.forEach(async function (icon) {
     icon.addEventListener("click", async function (e) {
       e.preventDefault();
-      const imageContainer = icon.closest(".modal-image");
-      if (!imageContainer) {
-        console.error("Container d'image introuvable.");
+      const imgElement = icon.closest(".modal-image").querySelector("img");
+      if (!imgElement) {
+        console.error("Image introuvable.");
         return;
       }
 
-      const workId = imageContainer.querySelector("img").dataset.id;
+      const workId = imgElement.dataset.id;
 
       try {
         const authToken = sessionStorage.getItem("authToken");
@@ -23,8 +23,15 @@ export async function handleDeleteIcons() {
         const response = await deleteElement(workId, authToken);
 
         if (response.status === 204) {
-          imageContainer.remove();
+          imgElement.closest(".modal-image").remove();
           console.log("L'élément a été supprimé avec succès.");
+
+          const galleryItem = document.querySelector(
+            `img[data-id="${workId}"]`
+          );
+          if (galleryItem) {
+            galleryItem.closest(".modal-image").remove();
+          }
         } else {
           console.error(
             "Erreur lors de la suppression de l'élément :",

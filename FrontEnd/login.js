@@ -1,49 +1,47 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const loginResponse = document.querySelector('.login');
-  const closeButton = document.getElementById('close-btn');
-  loginResponse.addEventListener('submit', function (event) {
+document.addEventListener("DOMContentLoaded", function () {
+  const loginResponse = document.querySelector(".login");
+  const closeButton = document.getElementById("close-btn");
+  loginResponse.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
     const loginData = {
       email: email,
-      password: password
+      password: password,
     };
     console.log(loginData);
 
-    fetch('http://localhost:5678/api/users/login', {
-      method: 'POST',
+    fetch("http://localhost:5678/api/users/login", {
+      method: "POST",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(loginData)
+      body: JSON.stringify(loginData),
     })
-      .then(response => {
+      .then((response) => {
         console.warn("response");
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         console.log(data);
 
         if (data.token) {
-          sessionStorage.setItem('authToken', data.token);
-          window.location.href = 'index.html';
+          sessionStorage.setItem("authToken", data.token);
+          window.location.href = "index.html";
         } else {
-          document.getElementById('error-message').style.display = "block"
-          console.error('Absence token');
+          document.getElementById("error-message").style.display = "block";
+          console.error("Absence token");
         }
       })
-      .catch(error => {
-        console.error('Erreur lors de la requête POST:', error);
+      .catch((error) => {
+        console.error("Erreur lors de la requête POST:", error);
       });
   });
 
-  closeButton.addEventListener('click', function(){
-    document.getElementById('error-message').style.display = "none"
-  })
+  closeButton.addEventListener("click", function () {
+    document.getElementById("error-message").style.display = "none";
+  });
 });
-

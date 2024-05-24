@@ -1,4 +1,9 @@
 export function appendImageElement(galleryContainer, item, isModalGallery) {
+  if (!galleryContainer) {
+    console.error("Gallery container is null.");
+    return;
+  }
+
   const imgContainer = document.createElement("div");
   imgContainer.classList.add("modal-image");
 

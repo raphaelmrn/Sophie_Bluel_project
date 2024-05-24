@@ -1,5 +1,5 @@
 const apiUrl = "http://localhost:5678/api/";
-
+import { appendImageElement } from "./gallery.js";
 export async function fetchData(endpoint) {
   try {
     const response = await fetch(apiUrl + endpoint);
@@ -95,7 +95,23 @@ async function createElement(formData, authToken) {
     if (response.ok) {
       console.log("Work created successfully.");
       modal[0].style.display = "none";
-      location.reload();
+      const responseData = await response.json();
+
+      const modalGalleryContainer = document.querySelector(".modal-gallery");
+      if (modalGalleryContainer) {
+        appendImageElement(modalGalleryContainer, responseData, true);
+      } else {
+        console.error("Modal gallery container not found.");
+      }
+
+      const galleryContainer = document.querySelector(".gallery");
+      if (galleryContainer) {
+        appendImageElement(galleryContainer, responseData, false);
+        document.querySelector(".editable").style.display = "none";
+        document.querySelector(".visual").style.display = "block";
+      } else {
+        console.error("Main gallery container not found.");
+      }
     } else {
       console.error("Failed to create work:", response.statusText);
     }

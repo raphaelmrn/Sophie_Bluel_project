@@ -88,12 +88,10 @@ editBtn[0].onclick = async function () {
 
 close.onclick = function () {
   modal[0].style.display = "none";
-  location.reload();
 };
 window.onclick = function (event) {
   if (event.target == modal[0]) {
     modal[0].style.display = "none";
-    location.reload();
   }
 };
 
@@ -136,14 +134,22 @@ async function addCategoriesSelect() {
 }
 addCategoriesSelect();
 
+const acceptedTypes = ["image/jpeg", "image/jpg", "image/png"];
+
 document.getElementById("file").addEventListener("change", function (event) {
   const file = event.target.files[0];
   const reader = new FileReader();
 
   reader.onload = function (e) {
     const imgElement = document.getElementById("image-preview");
+
     imgElement.src = e.target.result;
-    imgElement.style.display = "block";
+
+    if (file && acceptedTypes.includes(file.type)) {
+      imgElement.style.display = "block";
+    } else {
+      imgElement.style.display = "none"; // ici fix
+    }
 
     const svgIcon = document.querySelector(".img-svg");
     if (svgIcon) {
@@ -159,6 +165,11 @@ document.getElementById("file").addEventListener("change", function (event) {
     if (fileLabel) {
       fileLabel.style.display = "none";
     }
+
+    const imgRestriction = document.querySelector(".img-restriction");
+    if (imgRestriction) {
+      imgRestriction.style.display = "none";
+    }
   };
 
   reader.readAsDataURL(file);
@@ -170,7 +181,6 @@ if (editableSection) {
   document.getElementById("file").addEventListener("change", function () {
     const fileInput = document.getElementById("file");
     const file = fileInput.files[0];
-    const acceptedTypes = ["image/jpeg", "image/jpg", "image/png"];
 
     if (file && !acceptedTypes.includes(file.type)) {
       alert("Veuillez sélectionner un fichier de type JPEG, JPG ou PNG.");
