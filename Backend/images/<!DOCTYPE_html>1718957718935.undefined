@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>Mooncard - Administration</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"
+    />
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script
+      src="/vite-test/assets/mooncard_ui-Jt_1oa2J.js"
+      crossorigin="anonymous"
+      type="module"
+    ></script>
+    <link
+      rel="modulepreload"
+      href="/vite-test/assets/legacy-nAMcyBiv.js"
+      as="script"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="modulepreload"
+      href="/vite-test/assets/ui_kit_components-sMYucMjn.js"
+      as="script"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="modulepreload"
+      href="/vite-test/assets/index-WsR97KKU.js"
+      as="script"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="modulepreload"
+      href="/vite-test/assets/remixicon-bdi1WBRt.js"
+      as="script"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="modulepreload"
+      href="/vite-test/assets/_commonjsHelpers-4gQjN7DL.js"
+      as="script"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="modulepreload"
+      href="/vite-test/assets/component_controller-L1KaTTOb.js"
+      as="script"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="modulepreload"
+      href="/vite-test/assets/stimulus-9pr9EhDX.js"
+      as="script"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="modulepreload"
+      href="/vite-test/assets/component_controller-HT0jgYZC.js"
+      as="script"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="modulepreload"
+      href="/vite-test/assets/default_component_controller-TUBh49Yl.js"
+      as="script"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="modulepreload"
+      href="/vite-test/assets/component_controller-p4lztVPH.js"
+      as="script"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="modulepreload"
+      href="/vite-test/assets/component_controller-30H6PLJd.js"
+      as="script"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="modulepreload"
+      href="/vite-test/assets/default_component_controller-QG88afER.js"
+      as="script"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="modulepreload"
+      href="/vite-test/assets/component_controller-fncfPX3d.js"
+      as="script"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="modulepreload"
+      href="/vite-test/assets/display_settings_component_controller-s8HR86o9.js"
+      as="script"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="modulepreload"
+      href="/vite-test/assets/row_component_controller-hd9Yawcv.js"
+      as="script"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="modulepreload"
+      href="/vite-test/assets/component_controller-0MBqau6M.js"
+      as="script"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="modulepreload"
+      href="/vite-test/assets/component_controller-GMKYTScu.js"
+      as="script"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="modulepreload"
+      href="/vite-test/assets/index-CAPnO67W.js"
+      as="script"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="modulepreload"
+      href="/vite-test/assets/turbo.es2017-esm-TXpEAeuD.js"
+      as="script"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="/vite-test/assets/remixicon-LOAHORSP.css"
+      media="screen"
+    />
+    <link
+      rel="stylesheet"
+      href="/vite-test/assets/mooncard_ui-ZUiK2MAx.css"
+      data-turbolinks-track="reload"
+      media="screen"
+    />
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/assets/colour_lightning_mw-ad341042d93b55fdf979d304f7bdae2aefa0e9e50b2a231c2cda5a36a5c9aada.png"
+    />
+
+    <meta name="turbo-refresh-method" content="morph" />
+    <meta name="turbo-refresh-scroll" content="preserve" />
+
+    <style>
+      :root {
+        --color-primary-light: 129 216 255;
+        --color-primary: 2 177 255;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <div class="fixed inset-y-0 z-50 flex w-72 flex-col">
+        <!-- Sidebar component, swap this element with another sidebar if you like -->
+        <div
+          class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-primary bg-white px-6 pb-4"
+        >
+          <div class="flex flex-col shrink-0 items-center">
+            <img
+              class="w-20 h-20"
+              src="/assets/mooncard-logo-e422465e1e1b9ed1c16b35b3df2dc5978e60fb5a96f44f54aaebba6870f0b2d5.png"
+            />
+            <p class="text-gray-700 text-sm font-semibold">admin@mooncard.fr</p>
+          </div>
+          <nav class="flex flex-1 flex-col">
+            <ul role="list" class="flex flex-1 flex-col gap-y-7">
+              <li>
+                <ul role="list" class="-mx-2 space-y-1">
+                  <li>
+                    <a
+                      class="flex flex-row items-center text-gray-700 group flex gap-x-3 rounded-md p-2 text-base leading-6 font-semibold hover:bg-primary-light"
+                      href="/mooncard/history"
+                    >
+                      <i
+                        class="ri-history-line text-primary text-xl group-hover:text-white"
+                      ></i>
+                      <span class="text-gray-700 group-hover:text-white">
+                        Historique
+                      </span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="flex flex-row items-center text-gray-700 group flex gap-x-3 rounded-md p-2 text-base leading-6 font-semibold hover:bg-primary-light"
+                      href="/mooncard/customer"
+                    >
+                      <i
+                        class="ri-user-add-fill text-primary text-xl group-hover:text-white"
+                      ></i>
+                      <span class="text-gray-700 group-hover:text-white">
+                        Gestion des abonnés
+                      </span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="flex flex-row items-center text-gray-700 group flex gap-x-3 rounded-md p-2 text-base leading-6 font-semibold hover:bg-primary-light"
+                      href="/mooncard/uid_cards"
+                    >
+                      <i
+                        class="ri-bank-card-2-line text-primary text-xl group-hover:text-white"
+                      ></i>
+                      <span class="text-gray-700 group-hover:text-white">
+                        Badges RFID
+                      </span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="flex flex-row items-center text-gray-700 group flex gap-x-3 rounded-md p-2 text-base leading-6 font-semibold hover:bg-primary-light"
+                      href="/mooncard/ocpi_locations"
+                    >
+                      <i
+                        class="ri-charging-pile-2-line text-primary text-xl group-hover:text-white"
+                      ></i>
+                      <span
+                        class="text-gray-700 group-hover:text-white font-weight-bold"
+                      >
+                        Sites
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="mt-auto">
+                <a
+                  data-turbo-method="delete"
+                  data-confirm="Êtes-vous sûr(e) ?"
+                  class="flex flex-row items-center text-gray-700 group flex gap-x-3 rounded-md p-2 text-base leading-6 font-semibold hover:bg-primary-light"
+                  href="/mooncard/sign_out"
+                >
+                  <i
+                    class="ri-logout-box-r-line text-primary text-xl group-hover:text-white"
+                  ></i>
+                  <span class="text-gray-700 group-hover:text-white">
+                    Déconnexion
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div class="flex flex-col justify-center items-center">
+            <img
+              class="w-32"
+              src="/assets/colour_text_logo_mobilypass-dbd01dde3185c60eb5e1f6000adb38f6681b1a91261079299853152ac1f0143d.png"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="pl-72">
+        <main class="py-10">
+          <div class="px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-row items-center justify-between">
+              <div class="my-4 flex items-center space-x-4">
+                <span class="text-gray-700">Pas de filtre actif</span>
+                <a
+                  data-turbo="false"
+                  class="rounded-md bg-white px-3 py-2 text-sm text-center font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 inline-flex items-center space-x-2 hover:bg-gray-50"
+                  type="button"
+                  role="link"
+                  href="#filters"
+                >
+                  <i class="ri-filter-line"></i>
+                  <span>Filtres</span>
+                </a>
+                <a
+                  data-turbo="false"
+                  class="rounded-md bg-white px-3 py-2 text-sm text-center font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 inline-flex items-center space-x-2 hover:bg-gray-50"
+                  type="button"
+                  role="link"
+                  href="/mooncard/ocpi_locations.csv"
+                >
+                  <i class="ri-export-fill"></i>
+                  <span>Exporter</span>
+                </a>
+              </div>
+              <div></div>
+            </div>
+            <div>
+              <turbo-frame id="locations">
+                <div
+                  data-controller="ui-kit--table--component"
+                  data-ui-kit--table--component-storage-key-value="mooncard_locations_table"
+                  data-ui-kit--table--component-size-value="0"
+                  data-ui-kit--table--component-with-settings-columns-value='["operator_name","max_power","total_charge_points"]'
+                >
+                  <table
+                    class="min-w-full divide-y divide-gray-300 border-b"
+                    data-ui-kit--table--component-target="table"
+                  >
+                    <thead>
+                      <tr>
+                        <th
+                          scope="col"
+                          class="py-3.5 pl-4 pr-3 sm:pl-3 text-left text-sm font-semibold text-gray-900"
+                          data-ui-kit--table--component-target="headCell"
+                          data-col-id="name"
+                        >
+                          <a
+                            class="group inline-flex"
+                            href="/mooncard/ocpi_locations?q%5Bs%5D=nameasc"
+                          >
+                            Nom
+                            <span
+                              class="ml-2 flex-none rounded invisible text-gray-400 group-hover:visible group-focus:visible"
+                            >
+                              <svg
+                                class="h-5 w-5"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                  clip-rule="evenodd"
+                                />
+                              </svg>
+                            </span>
+                          </a>
+                        </th>
+                        <th
+                          scope="col"
+                          class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900"
+                          data-ui-kit--table--component-target="headCell"
+                          data-col-id="address"
+                        >
+                          <a
+                            class="group inline-flex"
+                            href="/mooncard/ocpi_locations?q%5Bs%5D=addressasc"
+                          >
+                            Adresse
+                            <span
+                              class="ml-2 flex-none rounded invisible text-gray-400 group-hover:visible group-focus:visible"
+                            >
+                              <svg
+                                class="h-5 w-5"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                  clip-rule="evenodd"
+                                />
+                              </svg>
+                            </span>
+                          </a>
+                        </th>
+                        <th
+                          scope="col"
+                          class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900"
+                          data-ui-kit--table--component-target="headCell"
+                          data-col-id="city"
+                        >
+                          <a
+                            class="group inline-flex"
+                            href="/mooncard/ocpi_locations?q%5Bs%5D=cityasc"
+                          >
+                            Ville
+                            <span
+                              class="ml-2 flex-none rounded invisible text-gray-400 group-hover:visible group-focus:visible"
+                            >
+                              <svg
+                                class="h-5 w-5"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                  clip-rule="evenodd"
+                                />
+                              </svg>
+                            </span>
+                          </a>
+                        </th>
+                        <th
+                          scope="col"
+                          class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900"
+                          data-ui-kit--table--component-target="headCell"
+                          data-col-id="postal_code"
+                        >
+                          <a
+                            class="group inline-flex"
+                            href="/mooncard/ocpi_locations?q%5Bs%5D=postal_codeasc"
+                          >
+                            Code postal
+                            <span
+                              class="ml-2 flex-none rounded invisible text-gray-400 group-hover:visible group-focus:visible"
+                            >
+                              <svg
+                                class="h-5 w-5"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                  clip-rule="evenodd"
+                                />
+                              </svg>
+                            </span>
+                          </a>
+                        </th>
+                        <th
+                          scope="col"
+                          class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900"
+                          data-ui-kit--table--component-target="headCell"
+                          data-col-id="operator_name"
+                        >
+                          <a
+                            class="group inline-flex"
+                            href="/mooncard/ocpi_locations?q%5Bs%5D=operator_nameasc"
+                          >
+                            CPO
+                            <span
+                              class="ml-2 flex-none rounded invisible text-gray-400 group-hover:visible group-focus:visible"
+                            >
+                              <svg
+                                class="h-5 w-5"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                  clip-rule="evenodd"
+                                />
+                              </svg>
+                            </span>
+                          </a>
+                        </th>
+                        <th
+                          scope="col"
+                          class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900"
+                          data-ui-kit--table--component-target="headCell"
+                          data-col-id="max_power"
+                        >
+                          <a
+                            class="group inline-flex"
+                            href="/mooncard/ocpi_locations?q%5Bs%5D=max_power_sortasc"
+                          >
+                            Puissance maximale (kWh)
+                            <span
+                              class="ml-2 flex-none rounded invisible text-gray-400 group-hover:visible group-focus:visible"
+                            >
+                              <svg
+                                class="h-5 w-5"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                  clip-rule="evenodd"
+                                />
+                              </svg>
+                            </span>
+                          </a>
+                        </th>
+                        <th
+                          scope="col"
+                          class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900"
+                          data-ui-kit--table--component-target="headCell"
+                          data-col-id="total_charge_points"
+                        >
+                          <a
+                            class="group inline-flex"
+                            href="/mooncard/ocpi_locations?q%5Bs%5D=total_charge_points_sortasc"
+                          >
+                            Nb total de points de charge
+                            <span
+                              class="ml-2 flex-none rounded invisible text-gray-400 group-hover:visible group-focus:visible"
+                            >
+                              <svg
+                                class="h-5 w-5"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                  clip-rule="evenodd"
+                                />
+                              </svg>
+                            </span>
+                          </a>
+                        </th>
+
+                        <th
+                          scope="col"
+                          class="relative pl-3 pr-4 sm:pr-3 flex justify-end relative top-3"
+                          data-ui-kit--table--component-target="headCell"
+                          data-col-id="_display_settings"
+                        >
+                          <div
+                            data-controller="ui-kit--table--display-settings-component"
+                          >
+                            <div
+                              data-controller="ui-kit--dropdown--component"
+                              class="relative shrink-0"
+                            >
+                              <button
+                                type="button"
+                                class="flex items-center rounded-full text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-gray-100"
+                                data-action="click->ui-kit--dropdown--component#toggle"
+                                aria-expanded="true"
+                                aria-haspopup="true"
+                              >
+                                <i class="ri-list-settings-line px-1"></i>
+                              </button>
+
+                              <div
+                                class="hidden absolute mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden min-w-full z-10 opacity-0 scale-95 w-72 origin-top-right right-0"
+                                aria-orientation="vertical"
+                                aria-labelledby="dropdown-button"
+                                tabindex="-1"
+                                data-ui-kit--dropdown--component-target="modal"
+                                data-controller="transition"
+                                data-transition-enter-active="transition ease-out duration-100"
+                                data-transition-enter-from="transform opacity-0 scale-95"
+                                data-transition-enter-to="transform opacity-100 scale-100"
+                                data-transition-leave-active="transition ease-in duration-75"
+                                data-transition-leave-from="transform opacity-100 scale-100"
+                                data-transition-leave-to="transform opacity-0 scale-95"
+                                data-action="transition:end-leave-&gt;ui-kit--dropdown--component#resetTransition"
+                              >
+                                <div
+                                  class="px-3 py-4 space-y-5"
+                                  data-ui-kit--table--display-settings-component-target="sortableContainer"
+                                >
+                                  <div
+                                    class="flex items-center font-medium"
+                                    data-ui-kit--table--display-settings-component-target="sortableColumn"
+                                    data-sortable-column-name="operator_name"
+                                  >
+                                    <i
+                                      class="ri-draggable cursor-move"
+                                      data-handle="1"
+                                    ></i>
+                                    <span class="text-gray-700 text-sm ml-2"
+                                      >CPO</span
+                                    >
+                                    <span class="ml-auto pl-3">
+                                      <input
+                                        type="checkbox"
+                                        name="columns[operator_name]"
+                                        id="columns_operator_name"
+                                        value="1"
+                                        class="text-primary"
+                                        data-action="click-&gt;ui-kit--table--display-settings-component#setColumnVisibility"
+                                        data-column-name="operator_name"
+                                        checked="checked"
+                                      />
+                                    </span>
+                                  </div>
+                                  <div
+                                    class="flex items-center font-medium"
+                                    data-ui-kit--table--display-settings-component-target="sortableColumn"
+                                    data-sortable-column-name="max_power"
+                                  >
+                                    <i
+                                      class="ri-draggable cursor-move"
+                                      data-handle="1"
+                                    ></i>
+                                    <span class="text-gray-700 text-sm ml-2"
+                                      >Puissance maximale (kWh)</span
+                                    >
+                                    <span class="ml-auto pl-3">
+                                      <input
+                                        type="checkbox"
+                                        name="columns[max_power]"
+                                        id="columns_max_power"
+                                        value="1"
+                                        class="text-primary"
+                                        data-action="click-&gt;ui-kit--table--display-settings-component#setColumnVisibility"
+                                        data-column-name="max_power"
+                                        checked="checked"
+                                      />
+                                    </span>
+                                  </div>
+                                  <div
+                                    class="flex items-center font-medium"
+                                    data-ui-kit--table--display-settings-component-target="sortableColumn"
+                                    data-sortable-column-name="total_charge_points"
+                                  >
+                                    <i
+                                      class="ri-draggable cursor-move"
+                                      data-handle="1"
+                                    ></i>
+                                    <span class="text-gray-700 text-sm ml-2"
+                                      >Nb total de points de charge</span
+                                    >
+                                    <span class="ml-auto pl-3">
+                                      <input
+                                        type="checkbox"
+                                        name="columns[total_charge_points]"
+                                        id="columns_total_charge_points"
+                                        value="1"
+                                        class="text-primary"
+                                        data-action="click-&gt;ui-kit--table--display-settings-component#setColumnVisibility"
+                                        data-column-name="total_charge_points"
+                                        checked="checked"
+                                      />
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody class="divide-y divide-gray-200"></tbody>
+                  </table>
+                </div>
+                <div class="px-4 py-4">
+                  <div class="flex items-center place-content-between">
+                    <span class="pagy info">Aucun élément trouvé</span>
+                    <nav class="pagy nav" aria-label="Page">
+                      <a role="link" aria-disabled="true" aria-label="Précédent"
+                        >&lt;</a
+                      ><a
+                        role="link"
+                        aria-disabled="true"
+                        aria-current="page"
+                        class="current"
+                        >1</a
+                      ><a role="link" aria-disabled="true" aria-label="Suivant"
+                        >&gt;</a
+                      >
+                    </nav>
+                  </div>
+                </div>
+              </turbo-frame>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+    <div
+      class="relative z-10 hidden"
+      role="dialog"
+      tabindex="0"
+      aria-modal="true"
+      data-controller="ui-kit--drawer--default-component"
+      data-action="hashchange@window->ui-kit--drawer--default-component#openFromUrl keydown.esc->ui-kit--drawer--default-component#close"
+      data-ui-kit--drawer--default-component-id-value="filters"
+      data-ui-kit--drawer--default-component-focus-value="true"
+    >
+      <div
+        class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity opacity-0 hidden"
+        data-ui-kit--drawer--default-component-target="backgroundBackdrop"
+        data-controller="transition"
+        data-transition-enter-active="ease-in-out duration-200"
+        data-transition-enter-from="opacity-0"
+        data-transition-enter-to="opacity-100"
+        data-transition-leave-active="ease-in-out duration-200"
+        data-transition-leave-from="opacity-100"
+        data-transition-leave-to="opacity-0"
+        data-action="transition:end-leave-&gt;ui-kit--drawer--default-component#resetTransition"
+      ></div>
+
+      <div class="fixed inset-0 overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden">
+          <div
+            class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10"
+          >
+            <div
+              class="pointer-events-auto w-screen max-w-md transform transition transform-gpu translate-x-full hidden"
+              data-ui-kit--drawer--default-component-target="panel"
+              data-controller="transition"
+              data-transition-enter-active="ease-in-out duration-200 sm:duration-400"
+              data-transition-enter-from="translate-x-full"
+              data-transition-enter-to="translate-x-0"
+              data-transition-leave-active="ease-in-out duration-200 sm:duration-400"
+              data-transition-leave-from="translate-x-0"
+              data-transition-leave-to="translate-x-full"
+              data-action="transition:end-leave-&gt;ui-kit--drawer--default-component#resetTransition"
+            >
+              <div
+                class="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl"
+              >
+                <div class="px-4 sm:px-6 mt-14">
+                  <!-- Remove mt-14 with new layout-->
+                  <div class="flex items-start justify-between">
+                    <h2 class="text-base font-semibold leading-6 text-gray-900">
+                      Sites Français
+                    </h2>
+
+                    <div class="ml-3 flex h-7 items-center">
+                      <button
+                        type="button"
+                        class="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        data-action="click->ui-kit--drawer--default-component#close"
+                      >
+                        <span class="absolute -inset-2.5"></span>
+                        <span class="sr-only">Close panel</span>
+                        <svg
+                          class="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          aria-hidden="true"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="relative mt-6 flex-1 px-4 sm:px-6">
+                  <form
+                    class="space-y-6"
+                    id="ocpi/location_search"
+                    action="#"
+                    accept-charset="UTF-8"
+                    method="get"
+                  >
+                    <div class="space-y-2">
+                      <div class="flex items-center justify-between">
+                        <div class="space-x-2 flex items-center">
+                          <label
+                            class="block text-sm font-medium leading-6 text-gray-900"
+                            for="q_name_cont"
+                            >Nom contient</label
+                          >
+                          <p class="text-sm text-red-500"></p>
+                        </div>
+
+                        <span
+                          class="text-xs"
+                          data-text-input-characters-target="message"
+                        ></span>
+                      </div>
+
+                      <div>
+                        <input
+                          class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-light/50 sm:text-sm sm:leading-6"
+                          type="search"
+                          name="q[name_cont]"
+                          id="q_name_cont"
+                        />
+                      </div>
+                    </div>
+                    <div class="space-y-2">
+                      <div class="flex items-center justify-between">
+                        <div class="space-x-2 flex items-center">
+                          <label
+                            class="block text-sm font-medium leading-6 text-gray-900"
+                            for="q_address_cont"
+                            >Adresse contient</label
+                          >
+                          <p class="text-sm text-red-500"></p>
+                        </div>
+
+                        <span
+                          class="text-xs"
+                          data-text-input-characters-target="message"
+                        ></span>
+                      </div>
+
+                      <div>
+                        <input
+                          class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-light/50 sm:text-sm sm:leading-6"
+                          type="search"
+                          name="q[address_cont]"
+                          id="q_address_cont"
+                        />
+                      </div>
+                    </div>
+                    <div class="space-y-2">
+                      <div class="flex items-center justify-between">
+                        <div class="space-x-2 flex items-center">
+                          <label
+                            class="block text-sm font-medium leading-6 text-gray-900"
+                            for="q_city_cont"
+                            >Ville contient</label
+                          >
+                          <p class="text-sm text-red-500"></p>
+                        </div>
+
+                        <span
+                          class="text-xs"
+                          data-text-input-characters-target="message"
+                        ></span>
+                      </div>
+
+                      <div>
+                        <input
+                          class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-light/50 sm:text-sm sm:leading-6"
+                          type="search"
+                          name="q[city_cont]"
+                          id="q_city_cont"
+                        />
+                      </div>
+                    </div>
+                    <div class="space-y-2">
+                      <div class="flex items-center justify-between">
+                        <div class="space-x-2 flex items-center">
+                          <label
+                            class="block text-sm font-medium leading-6 text-gray-900"
+                            for="q_postal_code_cont"
+                            >Code postal contient</label
+                          >
+                          <p class="text-sm text-red-500"></p>
+                        </div>
+
+                        <span
+                          class="text-xs"
+                          data-text-input-characters-target="message"
+                        ></span>
+                      </div>
+
+                      <div>
+                        <input
+                          class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-light/50 sm:text-sm sm:leading-6"
+                          type="search"
+                          name="q[postal_code_cont]"
+                          id="q_postal_code_cont"
+                        />
+                      </div>
+                    </div>
+                    <div class="space-y-2">
+                      <div class="flex items-center justify-between">
+                        <div class="space-x-2 flex items-center">
+                          <label
+                            class="block text-sm font-medium leading-6 text-gray-900"
+                            for="q_operator_name_cont"
+                            >EMI3 CPO contient</label
+                          >
+                          <p class="text-sm text-red-500"></p>
+                        </div>
+
+                        <span
+                          class="text-xs"
+                          data-text-input-characters-target="message"
+                        ></span>
+                      </div>
+
+                      <div>
+                        <input
+                          class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-light/50 sm:text-sm sm:leading-6"
+                          type="search"
+                          name="q[operator_name_cont]"
+                          id="q_operator_name_cont"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="flex justify-center">
+                      <button
+                        name="button"
+                        type="submit"
+                        class="rounded-md bg-primary py-2 px-3 text-sm text-center font-semibold text-white shadow-sm hover:enabled:bg-primary-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary shrink-0 disabled:opacity-25"
+                      >
+                        <span>Filtrer</span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <turbo-frame id="application_drawer"></turbo-frame>
+
+    <turbo-frame id="application_toaster"></turbo-frame>
+  </body>
+</html>

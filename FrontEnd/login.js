@@ -1,47 +1,78 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const loginResponse = document.querySelector(".login");
-  const closeButton = document.getElementById("close-btn");
-  loginResponse.addEventListener("submit", function (event) {
-    event.preventDefault();
+function $(Selector) {
+  return document.querySelector(Selector);
+}
 
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+//**** Variables globales login ****/
+const email = $("form #email");
+const password = document.querySelector("form #password");
+const form = document.querySelector("form");
+const errorMessage = document.getElementById("error-message");
 
-    const loginData = {
-      email: email,
-      password: password,
+async function loginUser() {
+  try {
+    const userEmail = email.value.trim();
+    const userPassword = password.value.trim();
+
+    const requestBody = {
+      email: userEmail,
+      password: userPassword,
     };
-    console.log(loginData);
 
-    fetch("http://localhost:5678/api/users/login", {
+    const response = await fetch("http://localhost:5678/api/users/login", {
       method: "POST",
       headers: {
-        Accept: "application/json",
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
-      body: JSON.stringify(loginData),
-    })
-      .then((response) => {
-        console.warn("response");
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
+      body: JSON.stringify(requestBody),
+    });
 
-        if (data.token) {
-          sessionStorage.setItem("authToken", data.token);
-          window.location.href = "index.html";
-        } else {
-          document.getElementById("error-message").style.display = "block";
-          console.error("Absence token");
-        }
-      })
-      .catch((error) => {
-        console.error("Erreur lors de la requête POST:", error);
-      });
-  });
+    if (response.ok) {
+      const data = await response.json();
+      window.sessionStorage.setItem("loged", true);
+      window.sessionStorage.setItem("authToken", data.token);
+      window.location.href = "index.html";
+    } else {
+      if (response.status === 401) {
+        logoutUser();
+      } else {
+        displayLoginError("Email ou Mot de passe incorrect");
+      }
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
 
-  closeButton.addEventListener("click", function () {
-    document.getElementById("error-message").style.display = "none";
+function logoutUser() {
+  window.sessionStorage.removeItem("loged");
+  window.sessionStorage.removeItem("authToken");
+  window.location.href = "login.html";
+}
+
+function displayLoginError(message) {
+  email.classList.add("inputErrorLogin");
+  password.classList.add("inputErrorLogin");
+  errorMessage.textContent = message;
+  setTimeout(clearError, 3000);
+}
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  await loginUser();
+});
+
+function clearError() {
+  email.classList.remove("inputErrorLogin");
+  password.classList.remove("inputErrorLogin");
+  errorMessage.textContent = "";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const closeButton = document.getElementById("close-btn");
+  const errorMessage = document.getElementById("error-message");
+
+  closeButton.addEventListener("click", () => {
+    errorMessage.style.display = "none";
   });
 });

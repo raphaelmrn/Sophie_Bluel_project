@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script
+      src="https://kit.fontawesome.com/baf1d1f4b2.js"
+      crossorigin="anonymous"
+    ></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
       rel="stylesheet"
@@ -14,21 +18,42 @@
     <link rel="stylesheet" href="./assets/style.css" />
   </head>
   <body>
-    <div class="unlogged">
-      <div class="editor">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="17"
-          height="17"
-          viewBox="0 0 17 17"
-          fill="none"
-        >
-          <path
-            d="M14.0229 2.18576L14.3939 2.55679C14.6821 2.84503 14.6821 3.31113 14.3939 3.5963L13.5016 4.49169L12.0879 3.07808L12.9803 2.18576C13.2685 1.89751 13.7346 1.89751 14.0198 2.18576H14.0229ZM6.93332 8.23578L11.0484 4.11759L12.4621 5.53121L8.34387 9.64633C8.25494 9.73525 8.14455 9.79964 8.02496 9.83337L6.23111 10.3455L6.7432 8.55162C6.77693 8.43203 6.84133 8.32164 6.93025 8.23271L6.93332 8.23578ZM11.9408 1.14625L5.89074 7.1932C5.62397 7.45998 5.43078 7.78808 5.32959 8.14685L4.4526 11.2133C4.379 11.4708 4.44953 11.7468 4.63965 11.9369C4.82977 12.127 5.10574 12.1976 5.36332 12.124L8.42973 11.247C8.79156 11.1427 9.11967 10.9495 9.38338 10.6858L15.4334 4.63888C16.2951 3.77722 16.2951 2.37894 15.4334 1.51728L15.0624 1.14625C14.2007 0.284585 12.8024 0.284585 11.9408 1.14625ZM3.19844 2.34214C1.70816 2.34214 0.5 3.55031 0.5 5.04058V13.3812C0.5 14.8715 1.70816 16.0796 3.19844 16.0796H11.5391C13.0293 16.0796 14.2375 14.8715 14.2375 13.3812V9.94683C14.2375 9.539 13.9094 9.21089 13.5016 9.21089C13.0937 9.21089 12.7656 9.539 12.7656 9.94683V13.3812C12.7656 14.0589 12.2167 14.6078 11.5391 14.6078H3.19844C2.52076 14.6078 1.97188 14.0589 1.97188 13.3812V5.04058C1.97188 4.36291 2.52076 3.81402 3.19844 3.81402H6.63281C7.04065 3.81402 7.36875 3.48591 7.36875 3.07808C7.36875 2.67025 7.04065 2.34214 6.63281 2.34214H3.19844Z"
-            fill="white"
-          />
-        </svg>
-        <a class="editor-text">Mode édition</a>
+    <div class="editor">
+      <a class="editor-text">Mode édition</a>
+    </div>
+    <div class="containerModal">
+      <div class="worksModal">
+        <span><i class="fa-regular fa-circle-xmark"></i></span>
+        <h2>Gallerie photo</h2>
+        <div class="worksInModal"></div>
+        <div id="line" class="line"></div>
+        <button>Ajouter une photo</button>
+      </div>
+      <div class="addWorksModal">
+        <span class="back"><i class="fa-solid fa-arrow-left"></i></span>
+        <span class="close"><i class="fa-solid fa-xmark"></i></span>
+        <h2>Ajout photo</h2>
+        <form>
+          <div class="fileContainer">
+            <span><i class="fa-regular fa-image"></i></span>
+            <label for="file">+ Ajouter photo</label>
+            <input
+              type="file"
+              id="file"
+              name="image"
+              accept=".jpg, .jpeg, .png"
+              maxlength="4194304"
+            />
+            <img src="#" alt="aperçu" />
+            <p id="fileError">Le fichier ne doit pas dépasser 4 Mo.</p>
+            <p id="validOptions">jpg,png: 4mo max</p>
+          </div>
+          <label for="title">Titre</label>
+          <input type="text" id="title" name="title" />
+          <label for="category">Catégorie</label>
+          <select name="category" id="category"></select>
+          <button class="addButton" disabled>Valider</button>
+        </form>
       </div>
     </div>
     <header>
@@ -37,8 +62,7 @@
         <ul>
           <li>projets</li>
           <li>contact</li>
-          <li><a href="login.html" id="login-link">Login</a></li>
-          <li><a href="#" id="logout-link">Déconnexion</a></li>
+          <li><a href="login.html" class="logout">Login</a></li>
           <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
         </ul>
       </nav>
@@ -67,81 +91,16 @@
           </p>
         </article>
       </section>
-      <section id="portfolio">
-        <div class="unlogged">
-          <div class="edit-place">
-            <h2>Mes Projets</h2>
-            <button class="editBtn">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="17"
-                height="17"
-                viewBox="0 0 17 17"
-                fill="none"
-              >
-                <path
-                  d="M14.0229 2.18576L14.3939 2.55679C14.6821 2.84503 14.6821 3.31113 14.3939 3.5963L13.5016 4.49169L12.0879 3.07808L12.9803 2.18576C13.2685 1.89751 13.7346 1.89751 14.0198 2.18576H14.0229ZM6.93332 8.23578L11.0484 4.11759L12.4621 5.53121L8.34387 9.64633C8.25494 9.73525 8.14455 9.79964 8.02496 9.83337L6.23111 10.3455L6.7432 8.55162C6.77693 8.43203 6.84133 8.32164 6.93025 8.23271L6.93332 8.23578ZM11.9408 1.14625L5.89074 7.1932C5.62397 7.45998 5.43078 7.78808 5.32959 8.14685L4.4526 11.2133C4.379 11.4708 4.44953 11.7468 4.63965 11.9369C4.82977 12.127 5.10574 12.1976 5.36332 12.124L8.42973 11.247C8.79156 11.1427 9.11967 10.9495 9.38338 10.6858L15.4334 4.63888C16.2951 3.77722 16.2951 2.37894 15.4334 1.51728L15.0624 1.14625C14.2007 0.284585 12.8024 0.284585 11.9408 1.14625ZM3.19844 2.34214C1.70816 2.34214 0.5 3.55031 0.5 5.04058V13.3812C0.5 14.8715 1.70816 16.0796 3.19844 16.0796H11.5391C13.0293 16.0796 14.2375 14.8715 14.2375 13.3812V9.94683C14.2375 9.539 13.9094 9.21089 13.5016 9.21089C13.0937 9.21089 12.7656 9.539 12.7656 9.94683V13.3812C12.7656 14.0589 12.2167 14.6078 11.5391 14.6078H3.19844C2.52076 14.6078 1.97188 14.0589 1.97188 13.3812V5.04058C1.97188 4.36291 2.52076 3.81402 3.19844 3.81402H6.63281C7.04065 3.81402 7.36875 3.48591 7.36875 3.07808C7.36875 2.67025 7.04065 2.34214 6.63281 2.34214H3.19844Z"
-                  fill="black"
-                />
-              </svg>
-              <a>modifier</a>
-            </button>
-            <section class="modal">
-              <div class="modal-content">
-                <span class="close">&times;</span>
-								<div class="visual">
-									<p class="modal-title">Galerie Photo</p>
-									<div class="modal-gallery">
-                    <div class="modal-image">
-                      <img src="" />
-                        <div class="delete-icon">
-                        </div>
-                    </div>
-									</div>
-									<hr class="line" />
-									<div class="add-photo">
-										<button class="next-button">Ajouter une photo</button>
-									</div>
-								</div>
-								<div class="editable">
-									<button class="back">
-										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" >
-											<path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
-										</svg>
-									</button>
-									<p class="modal-title">Ajout photo</p>
-									<section id="add-project">
-										<form action="#" method="post">
-											<div class="add-image">
-                        <img id="image-preview" src="#" alt="Aperçu de l'image">
-												<svg class="img-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#cbd6dc" d="M448 80c8.8 0 16 7.2 16 16V415.8l-5-6.5-136-176c-4.5-5.9-11.6-9.3-19-9.3s-14.4 3.4-19 9.3L202 340.7l-30.5-42.7C167 291.7 159.8 288 152 288s-15 3.7-19.5 10.1l-80 112L48 416.3l0-.3V96c0-8.8 7.2-16 16-16H448zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm80 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"/></svg>
-                        <div class="photo-btn">
-                          <input type="file" name="file" id="file" accept=".jpg, .jpeg, .png" maxlength="4194304"/>
-                          <label for="file" class="file-label">+ Ajouter une photo</label>
-                        </div>
-                        <p class="img-restriction">jpg,png : 4mo max</p>
-											</div>
-											<label for="title">Titre</label>
-											<input type="title" name="title" id="title"/>
-											<label for="categories">Catégories</label>
-											<select id="categories" name="categories">
-                        <option selected disabled>Selectionnez une catégorie</option>
-											</select>
-											<hr class="line" />
-											<div class="add-photo">
-												<button class="add-button">Valider</button>
-											</div>
-										</form>
-									</section>
-								</div>
-            </section>
-          </div>
-        </div>
-        <div class="filter-position">
-          <div class="filter-buttons"></div>
-        </div>
-        <div class="gallery"></div>
-      </section>
+      <div class="admin">
+        <h2>Mes projets</h2>
+        <span class="fa-regular fa-pen-to-square">
+          <a href="#" class="modale"></a>
+        </span>
+      </div>
+      <div class="filter-position">
+        <div class="filter-buttons"></div>
+      </div>
+      <div class="gallery"></div>
       <section id="contact">
         <h2>Contact</h2>
         <p>Vous avez un projet ? Discutons-en !</p>

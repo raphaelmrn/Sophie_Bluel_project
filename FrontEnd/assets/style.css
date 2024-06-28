@@ -30,7 +30,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
-	background-color: antiquewhite;
+	background-color:white;
 }
 ol, ul {
 	list-style: none;
@@ -140,6 +140,22 @@ li:hover {
 #login h2{
 	text-align: center;
 }
+
+/**** Modifs écran admin ****/
+.admin{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 20px;
+	gap: 30px;
+}
+
+.fa-pen-to-square{
+	display: none;
+}
+
+
+/**** Gallerie ****/
 .gallery {
 	width: 100%;
 	display: grid;
@@ -152,96 +168,180 @@ li:hover {
 	width: 100%;
 }
 
-.unlogged{
-	display: none
-
+/**** Modale ****/
+.modale{
+	font-family: 'Work Sans';
+	Size :14px;
 }
-
-.edit-place{
-  display: flex;
-	align-items: baseline;
-	justify-content: center;
-	gap: 10px;
-}
-
-.editBtn{
-	display: flex;
-	align-items: center;
-	border: none;
-	background-color: antiquewhite;
-	cursor: pointer;
-	gap: 5px;
-}
-
-.modal{
-	display: none;
-	position: fixed;
-	z-index: 1;
-	padding-top: 100px;
-	left: 0%;
-	top: 0;
-	width: 100%;
-	height: 100%; 
-	overflow: auto;
-	background-color: rgb(0,0,0);
-	background-color: rgba(0,0,0,0.4);
-}
-
-.modal-image{
-	position: relative;
-	width: 100%;
-}
-
-.delete-icon {
-  position: absolute;
-	right: 0;
+.containerModal {
+  z-index: 7;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
   top: 0;
-  z-index: 2;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(136, 136, 136, 0.27);
+}
+
+/**** Premier écran modale ****/
+
+.worksModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 70%;
+  max-height: 80%;
+  background-color: white;
+  border-radius: 5px;
+  flex-direction: column;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.worksModal .fa-regular.fa-circle-xmark {
+  position: absolute;
+  top: 10px;
+  right: 10px;
   padding: 5px;
-  width: 20px;
-  background-color: rgb(6, 6, 6);
   cursor: pointer;
 }
 
-.img-restriction {
-	padding-bottom: 20px;
-}
-.trash-icon path{
-	fill:#000;
-	z-index: 3;
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  border: 1px solid #888;
-  width: 70%;
-	max-height: 80vh;
-	overflow-y: auto;
+.worksModal button {
+  background-color: #1d6154;
+	color: white;
+	width: 25%;
+	height: 36px;
+  padding: 5px 10px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
 }
 
-.modal-title{
-	font-family: 'Work Sans';
-	display: flex;
-	justify-content: center;
-	font-size: 40px;
-	line-height: 30.5px;
-	font-weight: 400;
-	padding-top: 90px;
+.worksModal button:focus {
+  background-color: #000000;
+  color: white;
 }
 
-.modal-gallery{
+.worksInModal {
   display: grid;
-    grid-template-columns: repeat(5, 1fr); 
-    gap: 10px;
-		margin: 100px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  width: 100%;
 }
-.modal-gallery img{
-	max-width: 100%;
-	height: auto;
-	max-height: 100%;
-	width: auto;
+
+.worksInModal figure {
+  position: relative;
+  margin: 0;
 }
+
+.worksInModal img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.worksModal .worksInModal figure span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: black;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: white;
+  font-size: 12px;
+}
+
+/**** Ligne premier écran modale ****/
+#line .line {
+  border-style: solid;
+	border-color: blue;
+  border-top: 1px solid #ccc;
+  margin: 20px 0;
+}
+
+/**** Deuxième écran modale ****/
+
+.addWorksModal {
+	display: none;
+	justify-content: space-around;
+	flex-direction: column;
+	align-items: center;
+	height: 50%;
+	width: 50%;
+	background-color: whitesmoke;
+	border-radius: 5px;
+	position: relative;
+}
+
+.addWorksModal .back{
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	font-size: 20px;
+	cursor: pointer;
+	background-color: whitesmoke	;
+}
+
+.addWorksModal .close {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+.addWorksModal form{
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	height: 80%;
+	width: 80%;
+	gap: 10px;
+}
+
+.addWorksModal form .fileContainer{
+	background-color: #E8F1F6;
+	height: 50%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 5px;
+}
+
+.addWorksModal form label.title-label {
+  width: 100%; 
+
+}
+
+.addWorksModal form input{
+	width: 100%;
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.addWorksModal form select{
+	width: 100%;
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	margin-bottom: 20px;
+}
+
+/**** bouton pour fermer la modale ****/
 
 .close {
   color: #aaaaaa;
@@ -258,11 +358,20 @@ li:hover {
   cursor: pointer;
 }
 
-.line {
+/**** Bouton retour en arrière ****/
+
+.back{
+	display: flex;
+	background-color: white;
 	border: none;
-	border-top: 1px solid #ccc;
-	margin: 10px 0;
+	height: 36px;
+	width: 50px;
+	cursor: pointer;
+	padding: 10px;
 }
+
+
+/**** Boutons filtres ****/
 .filter-position{
 	display: flex;
   justify-content: center;
@@ -275,7 +384,7 @@ li:hover {
 	gap: 10px;
 }
 
-.filter-button {
+.filter-buttons button {
 	display: inline-block;
   padding: 10px 20px;
   border: 2px solid;
@@ -289,96 +398,29 @@ li:hover {
   transition: background-color 0.3s ease, color 0.3s ease; /
 }
 
-.filter-button:hover,
-.filter-button.active{
-	background-color: #1D6154;
-  color: white;
+.filter-buttons button {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 2px solid #1D6154;
+  border-radius: 50px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #ffff;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.add-photo{
-	display: flex;
-	align-items: center;
+.filter-buttons button:hover {
+  background-color: #1D6154;
+  color: #fff;
 }
 
-.next-button{
-	font-family: 'Syne';
-	font-weight: 700;
-	color: white;
-	background-color: #1D6154;
-	margin : 2em auto ;
-	width: 237px;
-	height: 36px;
-	text-align: center;
-	border-radius: 60px ;
-	border: none;
-	cursor: pointer;
-}
-
-.add-button{
-	font-family: 'Syne';
-	font-weight: 700;
-	color: white;
-	background-color: #1D6154;
-	margin : 2em auto ;
-	width: 237px;
-	height: 36px;
-	text-align: center;
-	border-radius: 60px ;
-	border: none;
-	cursor: pointer;
-}
-
-.add-button:disabled {
-  background-color: #c6c2c2; 
-  color: #636161; 
-  cursor: not-allowed; 
-}
-
-.img-svg{
-	margin-top: 20px;
-  max-width: 76px;
-  max-height: 76px;
-	display: block;
-}
-
-.photo-btn{
-	display: flex;
-	font-family: 'Syne';
-	font-weight: 700;
-	color: #306685;
-	background-color: #CBD6DC;
-	margin : auto ;
-	width: 237px;
-	height: 36px;
-	text-align: center;
-	justify-content: center;
-	border-radius: 60px ;
-	align-items: center;
-	display: block;
-}
-
-.editable{
-	display: none;
-}
-
-.back{
-	display: flex;
-	background-color: white;
-	border: none;
-	height: 36px;
-	width: 50px;
-	cursor: pointer;
-	padding: 10px;
-}
-
-.forget-password{
-	text-decoration: underline;
-}
-
+/**** Mode édition ****/
 
 .editor{
 	z-index: 1;
-	display: flex;
+	display: none;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -398,84 +440,69 @@ li:hover {
 	color: white;
 }
 
-.add-image{
+/**** Pré emplacement de l'image ****/
+
+.fileContainer label{
+	background-color: #CBD6DC;
+	color: #306685;
+	border-radius: 15px;
+	padding: 5px 10px;
+}
+.fileContainer input{
+	display: none
+}
+.fileContainer .fa-image{
+	padding-top: 20px;
+	padding-bottom: 10px;
+	font-size: 5rem;
+	color: #CBD6DC;
+}
+.fileContainer img{
+	display: none;
+	max-width: 100%;
+	height: 100%;
+}
+.fileContainer p{
+	padding-top: 10px;
+	font-size: 10px;
+	padding-bottom: 15px;
+}
+
+#fileError{
+	display: none;
+	color: red;
+}
+
+/**** Bouton d'ajout d'une photo ****/
+
+.addButton{
 	display: flex;
-	flex-direction: column;
-	align-items: center;
-	z-index: 0;
-	background-color: #E8F1F6;
+	padding: 5px 10px;
+	width: 50%;
+	height: 36px;
+	justify-content: center;
+	border-radius: 25px;
 	border: none;
+	background-color: grey;
+	cursor: not-allowed;
 	margin-bottom: 20px;
 }
 
-#image-preview{
-	display: none;
-}
-
-.add-image input[type="file"] {
-  z-index: 1;
-  opacity: 0;
-}
-
-.photo-btn {
-    position: relative;
-    display: inline-block;
-		margin-bottom: 20px;
-}
-
-.file-label {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-
-}
-
-.image-preview{
-	display: none;
-}
-
-#image-preview {
-  max-width: 50%; 
-  max-height: 140%;
-}
-
-#add-project{
-		width: 50%;
-	margin: auto;
-}
-
-#add-project form {
-	display: flex;
-	flex-direction: column;
-	text-align: left;
-	margin-top:30px;
-	margin-bottom: 30px;
-	gap: 20px;
-}
-
-#add-project input {
-	height: 50px;
-	font-size: 1.2em;
+.addButton.enabled{
+		padding: 5px 10px;
+	border-radius: 25px;
 	border: none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	color: white;
+	background-color: #1d6154;
+	cursor: pointer;
 }
 
-
-
-#add-project select {
-	height: 50px;
-	font-size: 1.2em;
-	border: none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+.addButton :hover{
+	background-color: #1D6154;
+	color: white;
 }
 
-
+/**** Formulaire ****/
 #contact {
 	width: 50%;
 margin: auto;
@@ -507,6 +534,14 @@ margin: auto;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
+/**** Oublie de mot de passe ****/
+
+.forget-password{
+	text-decoration: underline;
+}
+
+/**** Login ****/
 
 #log-in {
 	width: 50%;
@@ -540,26 +575,20 @@ margin: auto;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
+#log-in .inputErrorLogin{
+	border: 1px solid red
+}
+
 #error-message {
-	border-radius: 50%;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	background-color: #1D6154;
-	color: white;
+	margin-top: 20px;
+	padding: 10px;
+	color: red;
 	text-align: center;
 }
 
 #close-btn {
   cursor: pointer;
   margin-left: 10px;
-}
-
-.error {
-  margin: 0;
-}
-
-.hidden {
-  display: none;
 }
 
 input[type="submit"]{
