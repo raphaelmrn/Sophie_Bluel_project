@@ -180,44 +180,6 @@ function deleteWork() {
   );
 }
 
-//**** Ajouter une image dans la modale ****//
-
-const form = document.querySelector(".addWorksModal form");
-
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const authToken = sessionStorage.getItem("authToken");
-  const formData = new FormData(form);
-  try {
-    const response = await fetch("http://localhost:5678/api/works/", {
-      method: "POST",
-      body: formData,
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log("ajouté", data);
-    form.reset();
-    addWorksModal.style.display = "none";
-    worksModal.style.display = "flex";
-    const previewImg = document.getElementById("fileContainer img");
-    if (previewImg) {
-      previewImg.style.display = "none";
-      previewImg.src = "";
-    }
-    displayWorksModal();
-    displayWorks();
-  } catch (error) {
-    console.error("Erreur lors de l'ajout :", error);
-  }
-});
-
 //**** gestion dynamique des catégories ****//
 
 async function displayCategoriesModal() {
@@ -237,66 +199,16 @@ async function displayCategoriesModal() {
 displayCategoriesModal();
 
 //**** Vérification des inputs & parametres d'image ****//
-
-document.addEventListener("change", function () {
-  const fileInput = document.getElementById("file");
-  const imagePreview = document.querySelector(".fileContainer img");
-  const fileError = document.getElementById("fileError");
-
-  fileInput.addEventListener("change", function () {
-    const file = this.file[0];
-
-    const acceptedImageTypes = ["image/jpeg", "image/jpg", "image/png"];
-    if (!acceptedImageTypes.includes(file.type)) {
-      console.log("erreur1");
-      resetPreviewAndForm();
-      return;
-    }
-
-    const maxSizeBytes = 4 * 1024 * 1024;
-    if (file.size > maxSizeBytes) {
-      console.log("erreur2");
-      resetPreviewAndForm();
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function (event) {
-      imagePreview.src = event.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
-
-  function resetPreviewAndForm() {
-    imagePreview.src = "#";
-    fileInput.value = "";
-    fileError.style.display = "block";
-    setTimeout(function () {
-      fileError.style.display = "none";
-    }, 3000);
-  }
-});
-
-function completedForm() {
-  const acceptedTypes = ["image/jpeg", "image/jpg", "image/png"];
-
-  const validButton = document.querySelector(".addWorksModal button");
-  form.addEventListener("input", () => {
-    if (
-      !title.value == "" &&
-      !category.value == "" &&
-      !previewImg.src == "" &&
-      acceptedTypes
-    ) {
-      validButton.classList.add("enabled");
-      validButton.disabled = false;
-    } else {
-      validButton.classList.remove("enabled");
-      validButton.disabled = true;
-    }
-  });
-}
-completedForm();
+// const validButton = document.querySelector(".addWorksModal button");
+// form.addEventListener("input", () => {
+//   if (!title.value == "" && !category.value == "" && !previewImg.src == "") {
+//     validButton.classList.add("enabled");
+//     validButton.disabled = false;
+//   } else {
+//     validButton.classList.remove("enabled");
+//     validButton.disabled = true;
+//   }
+// });
 
 //**** gestion des deux modales ****//
 
@@ -321,18 +233,37 @@ function displayAddWorksModal() {
 }
 displayAddWorksModal();
 
-//**** prévisulisation de l'image ****//
-
+//**** Ajouter une image dans la modale ****//
+const form = document.querySelector(".addWorksModal form");
+const fileInput = document.getElementById("file");
+const titleInput = document.getElementById("title");
+const categorySelect = document.getElementById("category");
+const fileError = document.getElementById("fileError");
 const previewImg = document.querySelector(".fileContainer img");
-const inputFile = document.querySelector(".fileContainer input");
+const addButton = document.querySelector(".addButton");
 const labelFile = document.querySelector(".fileContainer label");
-const iconFile = document.querySelector(".fileContainer .fa-image");
+const iconFile = document.querySelector(".fileContainer span i");
 const pFile = document.getElementById("validOptions");
 
-inputFile.addEventListener("change", () => {
-  const file = inputFile.files[0];
-  console.log(file);
-  if (file) {
+//**** Validation des formats d'image ****//
+
+function validateFile(file) {
+  const validFormats = ["image/jpeg", "image/jpg", "image/png"];
+  const maxSize = 4 * 1024 * 1024; // 4 Mo
+
+  if (!validFormats.includes(file.type)) {
+    fileError.textContent = "Le format du fichier doit être jpg ou png.";
+    previewImg.style.display = "none";
+    previewImg.src = "";
+    return false;
+  } else if (file.size > maxSize) {
+    fileError.textContent = "Le fichier ne doit pas dépasser 4 Mo.";
+    previewImg.style.display = "none";
+    previewImg.src = "";
+    return false;
+  } else {
+    console.log("ok");
+    fileError.textContent = "";
     const reader = new FileReader();
     reader.onload = function (e) {
       previewImg.src = e.target.result;
@@ -340,7 +271,88 @@ inputFile.addEventListener("change", () => {
       labelFile.style.display = "none";
       iconFile.style.display = "none";
       pFile.style.display = "none";
+      fileInput.style.display = "none";
     };
     reader.readAsDataURL(file);
+    return true;
+  }
+}
+
+//**** Validation du formulaire ****//
+
+fileInput.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const isValid = validateFile(file);
+    if (!isValid) {
+      console.log("pas valide");
+      addButton.disabled = true;
+      addButton.classList.remove("enabled");
+    }
+  } else {
+    console.log("image ok", file);
+    previewImg.style.display = "none";
+    previewImg.src = "";
+    addButton.disabled = true;
+    addButton.classList.remove("enabled");
+  }
+  validateForm();
+});
+
+function validateForm() {
+  if (
+    titleInput.value.trim() !== "" &&
+    categorySelect.value !== "" &&
+    previewImg.src !== ""
+  ) {
+    console.log("ok");
+    addButton.classList.add("enabled");
+    addButton.disabled = false;
+  } else {
+    console.log("probleme form");
+    addButton.classList.remove("enabled");
+    addButton.disabled = true;
+  }
+}
+
+titleInput.addEventListener("input", validateForm);
+categorySelect.addEventListener("change", validateForm);
+
+//**** Methode post ****//
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const authToken = sessionStorage.getItem("authToken");
+  const formData = new FormData(form);
+
+  try {
+    const response = await fetch("http://localhost:5678/api/works/", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(
+        `HTTP error! status: ${response.status}, details: ${errorText}`
+      );
+    }
+
+    const data = await response.json();
+    console.log("ajouté", data);
+    form.reset();
+    addWorksModal.style.display = "none";
+    worksModal.style.display = "flex";
+    if (previewImg) {
+      previewImg.style.display = "none";
+      previewImg.src = "";
+    }
+    displayWorksModal();
+    displayWorks();
+  } catch (error) {
+    console.error("Erreur lors de l'ajout :", error);
   }
 });
