@@ -236,9 +236,6 @@ displayAddWorksModal();
 //**** Ajouter une image dans la modale ****//
 const form = document.querySelector(".addWorksModal form");
 const fileInput = document.getElementById("file");
-const titleInput = document.getElementById("title");
-const categorySelect = document.getElementById("category");
-const fileError = document.getElementById("fileError");
 const previewImg = document.querySelector(".fileContainer img");
 const addButton = document.querySelector(".addButton");
 const labelFile = document.querySelector(".fileContainer label");
@@ -247,85 +244,79 @@ const pFile = document.getElementById("validOptions");
 
 //**** Validation des formats d'image ****//
 
-function validateFile(file) {
-  const validFormats = ["image/jpeg", "image/jpg", "image/png"];
-  const maxSize = 4 * 1024 * 1024; // 4 Mo
+// function validateFile(file) {
+//   const validFormats = ["image/jpeg", "image/jpg", "image/png"];
+//   const maxSize = 4 * 1024 * 1024; // 4 Mo
 
-  if (!validFormats.includes(file.type)) {
-    fileError.textContent = "Le format du fichier doit être jpg ou png.";
-    previewImg.style.display = "none";
-    previewImg.src = "";
-    return false;
-  } else if (file.size > maxSize) {
-    fileError.textContent = "Le fichier ne doit pas dépasser 4 Mo.";
-    previewImg.style.display = "none";
-    previewImg.src = "";
-    return false;
-  } else {
-    console.log("ok");
-    fileError.textContent = "";
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      previewImg.src = e.target.result;
-      previewImg.style.display = "flex";
-      labelFile.style.display = "none";
-      iconFile.style.display = "none";
-      pFile.style.display = "none";
-      fileInput.style.display = "none";
-    };
-    reader.readAsDataURL(file);
-    return true;
-  }
-}
+//   if (!validFormats.includes(file.type)) {
+//     fileError.textContent = "Le format du fichier doit être jpg ou png.";
+//     previewImg.style.display = "none";
+//     previewImg.src = "";
+//     return false;
+//   } else if (file.size > maxSize) {
+//     fileError.textContent = "Le fichier ne doit pas dépasser 4 Mo.";
+//     previewImg.style.display = "none";
+//     previewImg.src = "";
+//     return false;
+//   } else {
+//     console.log("ok");
+//     fileError.textContent = "";
+//     const reader = new FileReader();
+//     reader.onload = function (e) {
+//       previewImg.src = e.target.result;
+//       previewImg.style.display = "flex";
+//       labelFile.style.display = "none";
+//       iconFile.style.display = "none";
+//       pFile.style.display = "none";
+//       fileInput.style.display = "none";
+//     };
+//     reader.readAsDataURL(file);
+//     return true;
+//   }
+// }
 
+// ajoute d'une déco forcée si authtoken est périmé redirect login
 //**** Validation du formulaire ****//
-
-fileInput.addEventListener("change", (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    const isValid = validateFile(file);
-    if (!isValid) {
-      console.log("pas valide");
-      addButton.disabled = true;
-      addButton.classList.remove("enabled");
-    }
-  } else {
-    console.log("image ok", file);
-    previewImg.style.display = "none";
-    previewImg.src = "";
-    addButton.disabled = true;
-    addButton.classList.remove("enabled");
-  }
-  validateForm();
-});
-
-function validateForm() {
-  if (
-    titleInput.value.trim() !== "" &&
-    categorySelect.value !== "" &&
-    previewImg.src !== ""
-  ) {
-    console.log("ok");
-    addButton.classList.add("enabled");
-    addButton.disabled = false;
-  } else {
-    console.log("probleme form");
-    addButton.classList.remove("enabled");
-    addButton.disabled = true;
-  }
-}
-
-titleInput.addEventListener("input", validateForm);
-categorySelect.addEventListener("change", validateForm);
-
-//**** Methode post ****//
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const authToken = sessionStorage.getItem("authToken");
   const formData = new FormData(form);
+  const errors = [];
+
+  const title = form.elements.title.value.trim();
+  const category = form.elements.category.value.trim();
+  const file = fileInput.files[0];
+
+  if (title === "") {
+    errors.push("Le titre doit être renseigné");
+  }
+  if (title.length < 2) {
+    errors.push("Un minimum de 2 caractères est attendu");
+  }
+  if (category === "") {
+    errors.push("La catégorie doit être renseignée");
+  }
+  if (!file) {
+    errors.push("Une image doit être ajoutée");
+  } else {
+    const acceptedFormats = ["image/jpeg", "image/jpg", "image/png"];
+    if (!acceptedFormats.includes(file.type)) {
+      errors.push("Les formats acceptés sont jpeg, jpg, png");
+    }
+    if (file.size > 4 * 1024 * 1024) {
+      errors.push("Le fichier ne doit pas dépasser 4 Mo");
+    }
+  }
+
+  if (errors.length > 0) {
+    alert(errors.join("\n"));
+    return;
+  }
 
   try {
+    formData.append("file", file);
+
     const response = await fetch("http://localhost:5678/api/works/", {
       method: "POST",
       body: formData,
@@ -344,15 +335,50 @@ form.addEventListener("submit", async (e) => {
     const data = await response.json();
     console.log("ajouté", data);
     form.reset();
+    addButton.disabled = true;
+    addButton.classList.remove("enabled");
+    previewImg.style.display = "none";
+    previewImg.src = "";
     addWorksModal.style.display = "none";
     worksModal.style.display = "flex";
-    if (previewImg) {
-      previewImg.style.display = "none";
-      previewImg.src = "";
-    }
     displayWorksModal();
     displayWorks();
   } catch (error) {
     console.error("Erreur lors de l'ajout :", error);
+  }
+});
+
+fileInput.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  const acceptedFormats = ["image/jpeg", "image/jpg", "image/png"];
+  const maxSize = 4 * 1024 * 1024; // 4 Mo
+  let isValid = true;
+
+  if (file) {
+    if (!acceptedFormats.includes(file.type) || file.size > maxSize) {
+      isValid = false;
+    }
+
+    if (!isValid) {
+      console.log("pas valide");
+      addButton.disabled = true;
+      addButton.classList.remove("enabled");
+    } else {
+      console.log("image ok", file);
+      previewImg.style.display = "block";
+      previewImg.src = URL.createObjectURL(file);
+      previewImg.style.display = "flex";
+      labelFile.style.display = "none";
+      iconFile.style.display = "none";
+      pFile.style.display = "none";
+      fileInput.style.display = "none";
+      addButton.disabled = false;
+      addButton.classList.add("enabled");
+    }
+  } else {
+    previewImg.style.display = "none";
+    previewImg.src = "";
+    addButton.disabled = true;
+    addButton.classList.remove("enabled");
   }
 });
